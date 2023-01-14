@@ -12,7 +12,10 @@ const Detail = () => {
   const [addCommnt, setAddCommnt] = useState({
     comment: "",
   });
-  const [love, setLove] = useState("");
+
+  //수정 모드 설정
+  //   const [isEditMode, setIsEditMode] = useState(false);
+  //   const [updatedCat, setUpdatedCat] = useState("");
 
   useEffect(() => {
     //고양이 상세설명 GET
@@ -29,43 +32,48 @@ const Detail = () => {
       .then((res) => {
         setMycomment(res);
       });
-    //고양이별 좋아요 GET
-    axios
-      .get(`${process.env.REACT_APP_CAT}/board/love/${id}`)
-      //
-      .then((res) => {
-        setLove(res);
-      });
   }, []);
-  //댓글 보내기 아
+
+  // 여기부터 댓글
   const submitCommentHandler = async (comment) => {
     await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment);
     return window.location.reload();
   };
 
-  const onDeleteComment = async (comment) => {
+  const onDeleteComment = async () => {
     await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
     return window.location.reload();
   };
 
-  const onEditComment = async (comment) => {};
+  const onEditComment = async (comment) => {
+    axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
+    return window.location.reload();
+  };
 
   return (
     <Layout>
       <StDetailALl>
-        <StCatPic>여기 그림 들어가는데</StCatPic>
-        {/* <StButton
-          borderColor="#f82c2c"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          이전으로
-        </StButton> */}
+        <StDetailBox>
+          <StCatPic>여기 그림 들어가는데</StCatPic>
+          <StDecsBox>
+            여기 설명 들어가는데
+            {mycat.catName}
+            {mycat.age}
+            {mycat.gender}
+            {mycat.text}
+          </StDecsBox>
+        </StDetailBox>
+        {/* <button onClick={one}></button> */}
         <StLoveVIew>
-          <StLove>💜 {love}</StLove>
+          <StLove>💜 {mycat.love}</StLove>
           <StView>뷰 들어가는데</StView>
         </StLoveVIew>
+
+        {/* 
+        
+        여기부터 코멘트 박스
+        
+        */}
         <STDescBox>
           <StAddComment>
             <form
@@ -78,7 +86,7 @@ const Detail = () => {
                 required
                 type="text"
                 value={addCommnt.comment}
-                placeholder="댓글"
+                placeholder="댓글을 입력해주세요"
                 onChange={(ev) => {
                   const { value } = ev.target;
                   setAddCommnt({
@@ -93,22 +101,25 @@ const Detail = () => {
           밑에서 부터 댓글 목록
           {mycomment.map((comment) => {
             return (
+              // {!isEditintg &&()}
               <div className="todocontainer" key={comment.commentId}>
                 <div className="todoInfo">
                   <h3 className="textBbox">
                     {comment.comment} - {comment.username}
                   </h3>
+                  {/* 삭제버튼 */}
                   <button
-                    className="justEditButton"
+                    className="justDeleteButton"
                     onClick={() => onDeleteComment(comment.commentId)}
                   >
                     ☝️delete
                   </button>
+                  {/* 수정버튼 */}
                   <button
                     className="justEditButton"
                     onClick={() => onEditComment(comment.commentId)}
                   >
-                    ☝️delete
+                    delete
                   </button>
                 </div>
               </div>
@@ -134,7 +145,20 @@ const StDetailALl = styled.div`
   align-items: center;
 `;
 
+const StDetailBox = styled.div`
+  display: flex;
+  //가운데 배열
+  align-items: center;
+  justify-content: center;
+`;
+
 const StCatPic = styled.div`
+  border: 1px solid red;
+  width: 300px;
+  height: 300px;
+`;
+
+const StDecsBox = styled.div`
   border: 1px solid red;
   width: 300px;
   height: 300px;
