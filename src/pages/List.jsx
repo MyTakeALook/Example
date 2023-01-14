@@ -19,7 +19,6 @@ const List = () => {
       <div className="listArray">
         <StGroup>
           {cats?.map((music) => {
-            console.log(music.id);
             return (
               <StBox key={music.id}>
                 <StHeadBox>

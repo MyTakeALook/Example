@@ -6,8 +6,8 @@ import axios from "axios";
 
 const Detail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [mycat, setMycat] = useState([]);
+  console.log(mycat);
   const [mycomment, setMycomment] = useState([]);
   const [addCommnt, setAddCommnt] = useState({
     comment: "",
@@ -20,46 +20,55 @@ const Detail = () => {
   useEffect(() => {
     //고양이 상세설명 GET
     axios
-      .get(`${process.env.REACT_APP_CAT}/index/${id}`)
-      //
-      .then((res) => {
-        setMycat(res);
+      .get(`http://localhost:3001/index`)
+      .then((response) => {
+        response.data.filter((list) => {
+          if (list.id === Number(id)) {
+            setMycat(list);
+          }
+          return null;
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
     //고양이별 댓글 GET
-    axios
-      .get(`${process.env.REACT_APP_CAT}/board/${id}`)
-      //
-      .then((res) => {
-        setMycomment(res);
-      });
+    // axios
+    //   .get(`${process.env.REACT_APP_CAT}/board/${id}`)
+    //   //
+    //   .then((res) => {
+    //     setMycomment(res);
+    //   });
   }, []);
 
   // 여기부터 댓글
-  const submitCommentHandler = async (comment) => {
-    await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment);
-    return window.location.reload();
-  };
+  //   const submitCommentHandler = async (comment) => {
+  //     await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment);
+  //     return window.location.reload();
+  //   };
 
-  const onDeleteComment = async () => {
-    await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
-    return window.location.reload();
-  };
+  //   const onDeleteComment = async () => {
+  //     await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
+  //     return window.location.reload();
+  //   };
 
-  const onEditComment = async (comment) => {
-    axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
-    return window.location.reload();
-  };
+  //   const onEditComment = async (comment) => {
+  //     axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
+  //     return window.location.reload();
+  //   };
 
   return (
     <Layout>
       <StDetailALl>
         <StDetailBox>
-          <StCatPic>여기 그림 들어가는데</StCatPic>
+          <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
           <StDecsBox>
-            여기 설명 들어가는데
             {mycat.catName}
+            <br />
             {mycat.age}
+            <br />
             {mycat.gender}
+            <br />
             {mycat.text}
           </StDecsBox>
         </StDetailBox>
@@ -74,7 +83,7 @@ const Detail = () => {
         여기부터 코멘트 박스
         
         */}
-        <STDescBox>
+        {/* <STDescBox>
           <StAddComment>
             <form
               onSubmit={(e) => {
@@ -98,9 +107,6 @@ const Detail = () => {
               <StButton>기록하기</StButton>
             </form>
           </StAddComment>
-          {/* 
-          여기부터 댓글 목록
-          */}
           밑에서 부터 댓글 목록
           {mycomment.map((comment) => {
             return (
@@ -110,14 +116,12 @@ const Detail = () => {
                   <h3 className="textBbox">
                     {comment.comment} - {comment.username}
                   </h3>
-                  {/* 삭제버튼 */}
                   <button
                     className="justDeleteButton"
                     onClick={() => onDeleteComment(comment.commentId)}
                   >
                     ☝️delete
                   </button>
-                  {/* 수정버튼 */}
                   <button
                     className="justEditButton"
                     onClick={() => onEditComment(comment.commentId)}
@@ -131,7 +135,7 @@ const Detail = () => {
           <StCommentBox>댓글 1</StCommentBox>
           <StCommentBox>댓글 2</StCommentBox>
           <StCommentBox>댓글 3</StCommentBox>
-        </STDescBox>
+        </STDescBox> */}
       </StDetailALl>
     </Layout>
   );

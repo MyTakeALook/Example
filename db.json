@@ -5,7 +5,9 @@
       "catName": "고양이",
       "age": "1",
       "gender": "M",
-      "text": "첫번째 고양이"
+      "text": "첫번째 고양이",
+      "imageUrl": "",
+      "love": "0"
     },
     {
       "id": 2,
