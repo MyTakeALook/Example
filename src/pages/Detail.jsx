@@ -20,7 +20,7 @@ const Detail = () => {
   useEffect(() => {
     //고양이 상세설명 GET
     axios
-      .get(`${process.env.REACT_APP_CAT}/index/detail/${id}`)
+      .get(`${process.env.REACT_APP_CAT}/index/${id}`)
       //
       .then((res) => {
         setMycat(res);
@@ -98,6 +98,9 @@ const Detail = () => {
               <StButton>기록하기</StButton>
             </form>
           </StAddComment>
+          {/* 
+          여기부터 댓글 목록
+          */}
           밑에서 부터 댓글 목록
           {mycomment.map((comment) => {
             return (
