@@ -6,16 +6,31 @@ import axios from "axios";
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [mycat, setMycat] = useState([]);
-  console.log(mycat);
-  const [mycomment, setMycomment] = useState([]);
-  const [addCommnt, setAddCommnt] = useState({
-    comment: "",
+  //수정 모드 설정
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [updatedCat, setUpdatedCat] = useState({
+    catName: "",
+    age: "",
+    gender: "",
+    text: "",
   });
 
-  //수정 모드 설정
-  //   const [isEditMode, setIsEditMode] = useState(false);
-  //   const [updatedCat, setUpdatedCat] = useState("");
+  const onEditThisCat = (e) => {
+    axios.patch(`http://localhost:3001/index/${id}`, e);
+    console.log(updatedCat);
+  };
+
+  const onDeletThisCat = () => {
+    const result = window.confirm("주인님을 지울까요?");
+    if (result) {
+      axios.delete(`http://localhost:3001/index/${id}`);
+      return navigate("/");
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
     //고양이 상세설명 GET
@@ -60,30 +75,233 @@ const Detail = () => {
   return (
     <Layout>
       <StDetailALl>
-        <StDetailBox>
-          <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
-          <StDecsBox>
-            {mycat.catName}
-            <br />
-            {mycat.age}
-            <br />
-            {mycat.gender}
-            <br />
-            {mycat.text}
-          </StDecsBox>
-        </StDetailBox>
-        {/* <button onClick={one}></button> */}
-        <StLoveVIew>
-          <StLove>💜 {mycat.love}</StLove>
-          <StView>뷰 들어가는데</StView>
-        </StLoveVIew>
+        {!isEditMode && (
+          <StDetailBox>
+            <StPicwithDesc>
+              <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
+              <StDecsBox>
+                {mycat.catName}
+                <br />
+                {mycat.age}
+                <br />
+                {mycat.gender}
+                <br />
+                {mycat.text}
+              </StDecsBox>
+            </StPicwithDesc>
+            <button
+              size="large"
+              onClick={() => {
+                setIsEditMode(true);
+              }}
+            >
+              글 수정
+            </button>
+            <button
+              size="large"
+              onClick={() => {
+                onDeletThisCat(id);
+              }}
+            >
+              글 삭제
+            </button>
+            <StLoveVIew>
+              <StLove>💜 {mycat.love}</StLove>
+              <StView>뷰 들어가는데</StView>
+            </StLoveVIew>
+          </StDetailBox>
+        )}
 
-        {/* 
+        {isEditMode && (
+          <StDetailBox>
+            <StDecsBox>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onEditThisCat(updatedCat);
+                  setIsEditMode(false);
+                }}
+              >
+                <input
+                  required
+                  type="text"
+                  placeholder={mycat.catName}
+                  onChange={(ev) => {
+                    setUpdatedCat({
+                      ...updatedCat,
+                      catName: ev.target.value,
+                    });
+                  }}
+                />
+                <br />
+                <input
+                  required
+                  type="text"
+                  placeholder={mycat.age}
+                  onChange={(ev) => {
+                    setUpdatedCat({
+                      ...updatedCat,
+                      age: ev.target.value,
+                    });
+                  }}
+                />
+                <br />
+                <input
+                  required
+                  type="text"
+                  placeholder={mycat.gender}
+                  onChange={(ev) => {
+                    setUpdatedCat({
+                      ...updatedCat,
+                      gender: ev.target.value,
+                    });
+                  }}
+                />
+                <br />
+                <input
+                  required
+                  type="text"
+                  placeholder={mycat.text}
+                  onChange={(ev) => {
+                    setUpdatedCat({
+                      ...updatedCat,
+                      text: ev.target.value,
+                    });
+                  }}
+                />
+                <button size="large">저장</button>
+              </form>
+              <button
+                size="large"
+                onClick={() => {
+                  setIsEditMode(false);
+                }}
+              >
+                뒤로
+              </button>
+            </StDecsBox>
+          </StDetailBox>
+        )}
+      </StDetailALl>
+    </Layout>
+  );
+};
+
+export default Detail;
+
+const StDetailALl = styled.div`
+  margin-top: 20px;
+  display: flex;
+  //아래로 정열
+  flex-direction: column;
+  //가운데 배열
+  align-items: center;
+`;
+
+const StDetailBox = styled.div`
+  display: flex;
+  //가운데 배열
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const StCatPic = styled.div`
+  border: 1px solid red;
+  width: 300px;
+  height: 300px;
+`;
+
+const StDecsBox = styled.div`
+  border: 1px solid red;
+  width: 300px;
+  height: 300px;
+`;
+
+const StPicwithDesc = styled.div`
+  display: flex;
+  //가운데 배열
+  align-items: center;
+  justify-content: center;
+`;
+
+const StLoveVIew = styled.div`
+  border: 1px solid red;
+  width: 600px;
+  height: 50px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const StLove = styled.div`
+  margin-top: 5px;
+  border: 1px solid red;
+  width: 200px;
+  height: 40px;
+`;
+const StView = styled.div`
+  margin-top: 5px;
+  border: 1px solid red;
+  width: 200px;
+  height: 40px;
+`;
+const StButtonGroup = styled.div`
+  width: 100%;
+  gap: 12px;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  border: 1px solid #eee;
+  padding: 12px;
+  font-size: 14px;
+`;
+
+const STDescBox = styled.div`
+  border: 1px solid black;
+  width: 600px;
+  height: 800px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  //아래로 정열
+  flex-direction: column;
+  //가운데 배열
+  align-items: center;
+`;
+
+const StAddComment = styled.text`
+  border: 1px solid black;
+  width: 500px;
+  height: 40px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StButton = styled.button`
+  background-color: beige;
+  margin-left: 30px;
+`;
+
+const StCommentBox = styled.div`
+  margin: 10px 0 0;
+  border: 1px solid black;
+  width: 500px;
+  height: 80px;
+`;
+
+{
+  /* 
         
         여기부터 코멘트 박스
         
-        */}
-        {/* <STDescBox>
+        */
+}
+{
+  /* <STDescBox>
           <StAddComment>
             <form
               onSubmit={(e) => {
@@ -133,97 +351,5 @@ const Detail = () => {
             );
           })}
           <StCommentBox>댓글 1</StCommentBox>
-          <StCommentBox>댓글 2</StCommentBox>
-          <StCommentBox>댓글 3</StCommentBox>
-        </STDescBox> */}
-      </StDetailALl>
-    </Layout>
-  );
-};
-
-export default Detail;
-
-const StDetailALl = styled.div`
-  margin-top: 20px;
-  display: flex;
-  //아래로 정열
-  flex-direction: column;
-  //가운데 배열
-  align-items: center;
-`;
-
-const StDetailBox = styled.div`
-  display: flex;
-  //가운데 배열
-  align-items: center;
-  justify-content: center;
-`;
-
-const StCatPic = styled.div`
-  border: 1px solid red;
-  width: 300px;
-  height: 300px;
-`;
-
-const StDecsBox = styled.div`
-  border: 1px solid red;
-  width: 300px;
-  height: 300px;
-`;
-
-const StLoveVIew = styled.div`
-  border: 1px solid red;
-  width: 600px;
-  height: 50px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-`;
-
-const StLove = styled.div`
-  margin-top: 5px;
-  border: 1px solid red;
-  width: 200px;
-  height: 40px;
-`;
-const StView = styled.div`
-  margin-top: 5px;
-  border: 1px solid red;
-  width: 200px;
-  height: 40px;
-`;
-
-const STDescBox = styled.div`
-  border: 1px solid black;
-  width: 600px;
-  height: 800px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  display: flex;
-  //아래로 정열
-  flex-direction: column;
-  //가운데 배열
-  align-items: center;
-`;
-
-const StAddComment = styled.text`
-  border: 1px solid black;
-  width: 500px;
-  height: 40px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StButton = styled.button`
-  background-color: beige;
-  margin-left: 30px;
-`;
-
-const StCommentBox = styled.div`
-  margin: 10px 0 0;
-  border: 1px solid black;
-  width: 500px;
-  height: 80px;
-`;
+        </STDescBox> */
+}
