@@ -8,11 +8,12 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the app in the development mode.\
+얀 스타트를 눌러서 로컬 호스트가 작동 되게 해주세요
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `yarn json server을 열어주세요`
+
+yarn json-server --watch db.json --port 3001 을 cmd,bash등 터미널에 입력해주세요
 
 ### `yarn test`
 
