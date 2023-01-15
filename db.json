@@ -10,13 +10,6 @@
       "love": "0"
     },
     {
-      "id": 2,
-      "catName": "이걸로",
-      "age": "바꾸자",
-      "gender": "되는지",
-      "text": "안되면 말구"
-    },
-    {
       "id": 3,
       "catName": "밀크",
       "age": "3",
@@ -36,6 +29,18 @@
       "age": "5",
       "gender": "W",
       "text": "다섯번째 고양이"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "comment": "너무 귀여워요",
+      "username": "정기"
+    },
+    {
+      "id": 2,
+      "comment": "너무 깜찍해요",
+      "username": "병진"
     }
   ]
 }

@@ -17,9 +17,10 @@ const Detail = () => {
     text: "",
   });
 
+  // 게시물 CRUD
   const onEditThisCat = (e) => {
     axios.patch(`http://localhost:3001/index/${id}`, e);
-    console.log(updatedCat);
+    return window.location.reload();
   };
 
   const onDeletThisCat = () => {
@@ -30,6 +31,33 @@ const Detail = () => {
     } else {
       return;
     }
+  };
+
+  //댓글 CRUD
+  const [isShow, setisShow] = useState(false);
+  const [mycomment, setMycomment] = useState([]);
+  const [isCommentEditMode, setIsCommentEditMode] = useState(false);
+  const [newcomment, setNewcomment] = useState({
+    comment: "",
+    username: "",
+  });
+  const [editcomment, setEditcomment] = useState({
+    comment: "",
+  });
+
+  const submitCommentHandler = async (comment) => {
+    await axios.post(`http://localhost:3001/comments`, comment);
+    return window.location.reload();
+  };
+
+  const onDeleteComment = async () => {
+    await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
+    return window.location.reload();
+  };
+
+  const onEditComment = async (comment) => {
+    axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
+    return window.location.reload();
   };
 
   useEffect(() => {
@@ -47,30 +75,12 @@ const Detail = () => {
       .catch(function (error) {
         console.log(error);
       });
-    //고양이별 댓글 GET
-    // axios
-    //   .get(`${process.env.REACT_APP_CAT}/board/${id}`)
-    //   //
-    //   .then((res) => {
-    //     setMycomment(res);
-    //   });
+    // 고양이별 댓글 GET
+    axios.get(`http://localhost:3001/comments`).then((res) => {
+      setMycomment(res.data);
+      console.log(mycomment);
+    });
   }, []);
-
-  // 여기부터 댓글
-  //   const submitCommentHandler = async (comment) => {
-  //     await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment);
-  //     return window.location.reload();
-  //   };
-
-  //   const onDeleteComment = async () => {
-  //     await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
-  //     return window.location.reload();
-  //   };
-
-  //   const onEditComment = async (comment) => {
-  //     axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
-  //     return window.location.reload();
-  //   };
 
   return (
     <Layout>
@@ -111,7 +121,6 @@ const Detail = () => {
             </StLoveVIew>
           </StDetailBox>
         )}
-
         {isEditMode && (
           <StDetailBox>
             <StDecsBox>
@@ -122,6 +131,7 @@ const Detail = () => {
                   setIsEditMode(false);
                 }}
               >
+                이름 :{" "}
                 <input
                   required
                   type="text"
@@ -134,6 +144,7 @@ const Detail = () => {
                   }}
                 />
                 <br />
+                나이 :{" "}
                 <input
                   required
                   type="text"
@@ -146,6 +157,7 @@ const Detail = () => {
                   }}
                 />
                 <br />
+                성별 :{" "}
                 <input
                   required
                   type="text"
@@ -158,6 +170,7 @@ const Detail = () => {
                   }}
                 />
                 <br />
+                설명 :{" "}
                 <input
                   required
                   type="text"
@@ -169,6 +182,7 @@ const Detail = () => {
                     });
                   }}
                 />
+                <br />
                 <button size="large">저장</button>
               </form>
               <button
@@ -183,6 +197,108 @@ const Detail = () => {
           </StDetailBox>
         )}
       </StDetailALl>
+      {/* 댓글 시작 */}
+      <StCommentAll>
+        {!isEditMode && (
+          <StContainer isShow={isShow}>
+            <StToggleContainer
+              onClick={() => {
+                setisShow((pre) => !pre);
+              }}
+            >
+              <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
+            </StToggleContainer>
+            <StCommentList>
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitCommentHandler(newcomment);
+                  }}
+                >
+                  <input
+                    required
+                    type="text"
+                    name="comment"
+                    value={newcomment.comment}
+                    placeholder="🎶comment🎶"
+                    onChange={(ev) => {
+                      const { value } = ev.target;
+                      setNewcomment({
+                        ...newcomment,
+                        comment: value,
+                      });
+                    }}
+                  />
+                  <input
+                    required
+                    type="text"
+                    name="username"
+                    placeholder="🎶username🎶"
+                    value={newcomment.username}
+                    onChange={(ev) => {
+                      const { value } = ev.target;
+                      setNewcomment({
+                        ...newcomment,
+                        username: value,
+                      });
+                    }}
+                  />
+                  <StButton>댓글작성</StButton>
+                </form>
+                {mycomment?.map((mycomment) => {
+                  return (
+                    <div>
+                      {!isCommentEditMode && (
+                        <StCommentBox>
+                          {mycomment.comment} : {mycomment.username}
+                          <br />
+                          <button
+                            size="large"
+                            onClick={() => {
+                              setIsCommentEditMode(true);
+                            }}
+                          >
+                            댓글 수정
+                          </button>
+                          <button
+                            size="large"
+                            ket={mycomment.id}
+                            onClick={() => {
+                              onDeleteComment(id);
+                            }}
+                          >
+                            댓글 삭제
+                          </button>
+                        </StCommentBox>
+                      )}
+                      {isCommentEditMode && (
+                        <form
+                          onClick={(e) => {
+                            onEditComment(e);
+                          }}
+                        >
+                          <input
+                            type="text"
+                            placeholder="입력안하면 수정안해"
+                            onChange={(ev) => {
+                              setEditcomment({
+                                ...editcomment,
+                                comment: ev.target.value,
+                              });
+                            }}
+                          />
+                          <button>댓글 수정 완료</button>
+                        </form>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </StCommentList>
+          </StContainer>
+        )}
+      </StCommentAll>
     </Layout>
   );
 };
@@ -246,40 +362,6 @@ const StView = styled.div`
   width: 200px;
   height: 40px;
 `;
-const StButtonGroup = styled.div`
-  width: 100%;
-  gap: 12px;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  border: 1px solid #eee;
-  padding: 12px;
-  font-size: 14px;
-`;
-
-const STDescBox = styled.div`
-  border: 1px solid black;
-  width: 600px;
-  height: 800px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  display: flex;
-  //아래로 정열
-  flex-direction: column;
-  //가운데 배열
-  align-items: center;
-`;
-
-const StAddComment = styled.text`
-  border: 1px solid black;
-  width: 500px;
-  height: 40px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const StButton = styled.button`
   background-color: beige;
@@ -293,13 +375,29 @@ const StCommentBox = styled.div`
   height: 80px;
 `;
 
-{
-  /* 
-        
-        여기부터 코멘트 박스
-        
-        */
-}
+const StCommentAll = styled.div``;
+///댓글 기능
+const StContainer = styled.div`
+  height: ${({ isShow }) => (isShow ? "400px" : "50px")};
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #fff;
+  transition: height 400ms ease-in-out;
+`;
+
+const StToggleContainer = styled.div`
+  height: 50px;
+  padding: 0 12px;
+  border-top: 1px solid #eee;
+`;
+
+const StCommentList = styled.div`
+  height: 350px;
+  overflow: scroll;
+`;
+
 {
   /* <STDescBox>
           <StAddComment>
