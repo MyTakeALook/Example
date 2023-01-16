@@ -1,26 +1,30 @@
 import Router from "../shared/Router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // axios import 합니다
 import styled from "styled-components";
 import { TextField } from "@mui/material";
-axios.defaults.baseURL = "http://localhost:3001/";
-axios.defaults.withCredentials = true;
+
+// axios.defaults.baseURL = "http://localhost:3001/";
+// axios.defaults.withCredentials = true;
 
 function Join() {
+  const [confirmpassword, setConfirmpassword] = useState("");
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword] = useState("");
   const navigate = useNavigate;
 
+  const onChange = useCallback((e) => {
+    setConfirmpassword(e.target.value);
+  }, []);
   const register = () => {
     if (password.length < 5) {
       alert("비밀번호는 5자리 이상이어야합니다.");
     } else if (name.length < 1) {
       alert("이름을 작성해주세요!");
-    } else if (id < 1) {
+    } else if (id.length < 1) {
       alert("아이디를 작성해주세요! ");
     } else if (confirmpassword !== password) {
       alert("엥? 비밀번호를 다시 확인해주세요!");
@@ -34,15 +38,14 @@ function Join() {
           // Handle success.
           console.log("Well done!");
           console.log("User profile", response.data.name, response.data.id);
-          // localStorage.setItem("token", response.data.jwt);
+          // localStorage.setItem("token", response.data.jwt);//jwt이용하지않는다.
           console.log(response);
           alert("회원가입 성공! 로그인으로 이동합니다");
-
           navigate("/");
         })
         .catch((error) => {
-          // Handle error.jwt이용 일단 x .
-          console.log("An error occurred:", error.response);
+          // Handle error.
+          console.log("An error occurred:", error);
         });
     }
   };
@@ -76,11 +79,11 @@ function Join() {
           <hr></hr>
           Password:
           <TextField
+            type="password"
             required
             onChange={(event) => {
               setPassword(event.target.value);
             }}
-            type="password"
             value={password}
             placeholder="이용하실 패스워드를 입력하세요."
           />
@@ -88,6 +91,7 @@ function Join() {
           <TextField
             type="password"
             value={confirmpassword}
+            onChange={onChange}
             placeholder="패스워드를 다시 한번 입력해주세요."
           />
         </StDiv>
