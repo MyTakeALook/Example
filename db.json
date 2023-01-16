@@ -69,5 +69,19 @@
       "comment": "너무 깜찍해요",
       "username": "병진"
     }
+  ],
+  "users": [
+    {
+      "name": "채정",
+      "email": "angela",
+      "password": "password",
+      "id": 1
+    },
+    {
+      "name": "채정",
+      "email": "chaejung",
+      "password": "",
+      "id": 2
+    }
   ]
 }
