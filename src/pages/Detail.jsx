@@ -20,7 +20,7 @@ const Detail = () => {
   // 게시물 CRUD
   const onEditThisCat = (e) => {
     axios.patch(`http://localhost:3001/index/${id}`, e);
-    return window.location.reload();
+    // return window.location.reload();
   };
 
   const onDeletThisCat = () => {
@@ -43,21 +43,28 @@ const Detail = () => {
   });
   const [editcomment, setEditcomment] = useState({
     comment: "",
+    id: "",
   });
 
   const submitCommentHandler = async (comment) => {
     await axios.post(`http://localhost:3001/comments`, comment);
-    return window.location.reload();
+    // return window.location.reload();
   };
 
-  const onDeleteComment = async () => {
-    await axios.delete(`${process.env.REACT_APP_CAT}/board/${id}`);
-    return window.location.reload();
+  const onDeleteComment = async (id) => {
+    const result = window.confirm("삭제하시겠습니까?");
+    if (result) {
+      await axios.delete(`http://localhost:3001/comments/${id}`);
+      // return window.location.reload();
+    } else {
+      return;
+    }
   };
 
-  const onEditComment = async (comment) => {
-    axios.patch(`${process.env.REACT_APP_MUSIC}/board/${id}`, comment);
-    return window.location.reload();
+  const onEditComment = async (e) => {
+    console.log(e);
+    axios.patch(`http://localhost:3001/comments/${e.id}`, e.comment);
+    // return window.location.reload();
   };
 
   useEffect(() => {
@@ -78,7 +85,6 @@ const Detail = () => {
     // 고양이별 댓글 GET
     axios.get(`http://localhost:3001/comments`).then((res) => {
       setMycomment(res.data);
-      console.log(mycomment);
     });
   }, []);
 
@@ -210,45 +216,47 @@ const Detail = () => {
             </StToggleContainer>
             <StCommentList>
               <div>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    submitCommentHandler(newcomment);
-                  }}
-                >
-                  <input
-                    required
-                    type="text"
-                    name="comment"
-                    value={newcomment.comment}
-                    placeholder="🎶comment🎶"
-                    onChange={(ev) => {
-                      const { value } = ev.target;
-                      setNewcomment({
-                        ...newcomment,
-                        comment: value,
-                      });
+                {!isCommentEditMode && (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      submitCommentHandler(newcomment);
                     }}
-                  />
-                  <input
-                    required
-                    type="text"
-                    name="username"
-                    placeholder="🎶username🎶"
-                    value={newcomment.username}
-                    onChange={(ev) => {
-                      const { value } = ev.target;
-                      setNewcomment({
-                        ...newcomment,
-                        username: value,
-                      });
-                    }}
-                  />
-                  <StButton>댓글작성</StButton>
-                </form>
+                  >
+                    <input
+                      required
+                      type="text"
+                      name="comment"
+                      value={newcomment.comment}
+                      placeholder="🎶comment🎶"
+                      onChange={(ev) => {
+                        const { value } = ev.target;
+                        setNewcomment({
+                          ...newcomment,
+                          comment: value,
+                        });
+                      }}
+                    />
+                    <input
+                      required
+                      type="text"
+                      name="username"
+                      placeholder="🎶username🎶"
+                      value={newcomment.username}
+                      onChange={(ev) => {
+                        const { value } = ev.target;
+                        setNewcomment({
+                          ...newcomment,
+                          username: value,
+                        });
+                      }}
+                    />
+                    <StButton>댓글작성</StButton>
+                  </form>
+                )}
                 {mycomment?.map((mycomment) => {
                   return (
-                    <div>
+                    <div key={mycomment.id}>
                       {!isCommentEditMode && (
                         <StCommentBox>
                           {mycomment.comment} : {mycomment.username}
@@ -263,37 +271,38 @@ const Detail = () => {
                           </button>
                           <button
                             size="large"
-                            ket={mycomment.id}
                             onClick={() => {
-                              onDeleteComment(id);
+                              onDeleteComment(mycomment.id);
                             }}
                           >
                             댓글 삭제
                           </button>
                         </StCommentBox>
                       )}
-                      {isCommentEditMode && (
-                        <form
-                          onClick={(e) => {
-                            onEditComment(e);
-                          }}
-                        >
-                          <input
-                            type="text"
-                            placeholder="입력안하면 수정안해"
-                            onChange={(ev) => {
-                              setEditcomment({
-                                ...editcomment,
-                                comment: ev.target.value,
-                              });
-                            }}
-                          />
-                          <button>댓글 수정 완료</button>
-                        </form>
-                      )}
                     </div>
                   );
                 })}
+                {isCommentEditMode && (
+                  <form
+                    onSubmit={(e) => {
+                      onEditComment(e);
+                    }}
+                  >
+                    <input
+                      required
+                      type="text"
+                      key={mycomment.id}
+                      onChange={(ev) => {
+                        setEditcomment({
+                          ...editcomment,
+                          comment: ev.target.value,
+                          id: mycomment.id,
+                        });
+                      }}
+                    />
+                    <button>댓글 수정 완료</button>
+                  </form>
+                )}
               </div>
             </StCommentList>
           </StContainer>
@@ -378,7 +387,7 @@ const StCommentBox = styled.div`
 const StCommentAll = styled.div``;
 ///댓글 기능
 const StContainer = styled.div`
-  height: ${({ isShow }) => (isShow ? "400px" : "50px")};
+  height: ${({ isShow }) => (isShow ? "400px" : "40px")};
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -397,57 +406,3 @@ const StCommentList = styled.div`
   height: 350px;
   overflow: scroll;
 `;
-
-{
-  /* <STDescBox>
-          <StAddComment>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                submitCommentHandler(addCommnt);
-              }}
-            >
-              <input
-                required
-                type="text"
-                value={addCommnt.comment}
-                placeholder="댓글을 입력해주세요"
-                onChange={(ev) => {
-                  const { value } = ev.target;
-                  setAddCommnt({
-                    ...addCommnt,
-                    comment: value,
-                  });
-                }}
-              />
-              <StButton>기록하기</StButton>
-            </form>
-          </StAddComment>
-          밑에서 부터 댓글 목록
-          {mycomment.map((comment) => {
-            return (
-              // {!isEditintg &&()}
-              <div className="todocontainer" key={comment.commentId}>
-                <div className="todoInfo">
-                  <h3 className="textBbox">
-                    {comment.comment} - {comment.username}
-                  </h3>
-                  <button
-                    className="justDeleteButton"
-                    onClick={() => onDeleteComment(comment.commentId)}
-                  >
-                    ☝️delete
-                  </button>
-                  <button
-                    className="justEditButton"
-                    onClick={() => onEditComment(comment.commentId)}
-                  >
-                    delete
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-          <StCommentBox>댓글 1</StCommentBox>
-        </STDescBox> */
-}

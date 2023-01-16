@@ -50,7 +50,7 @@ function Login() {
           <StButton
             type="submit"
             onClick={() => {
-              navigate("/");
+              navigate("/Index");
             }}
           >
             login

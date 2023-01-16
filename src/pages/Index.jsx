@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css";
-import "./Index.css";
+// import "./Index.css";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import styles from "./Index.css";
+// import styles from "./Index.css";
 
 const Index = () => {
   const [like, seTlike] = useState(false);
@@ -45,7 +45,7 @@ const Index = () => {
           </Btn>
           <Btn
             onClick={() => {
-              navigate("/add");
+              navigate("/Add");
             }}
           >
             🐾냥추
@@ -62,18 +62,19 @@ const Index = () => {
                 <div
                   className="cat_img"
                   onClick={() => {
-                    navigate("/list");
+                    navigate(`/Detail/${cat.id}`);
                   }}
-                ></div>
-                <div to={`/Index/${cat.id}`} key={cat.id}></div>
-
+                >
+                  여기
+                </div>
+                <div to={`/Detail/${cat.id}`} key={cat.id}></div>
                 <div>
                   <span
                     onClick={() => {
                       seTlike(like + 1);
                     }}
                   >
-                    {setLike}
+                    {/* {setLike} */}
                   </span>
                 </div>
                 <br></br>

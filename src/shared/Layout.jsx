@@ -1,11 +1,11 @@
 // src/shared/Layout.js
 
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeaderStyles = {
   width: "100%",
-  background: "black",
   height: "100px",
   display: "flex",
   alignItems: "center",
@@ -13,6 +13,7 @@ const HeaderStyles = {
   color: "white",
   fontWeight: "600",
   fontSize: "60px",
+  margin: "120px 0 0 30px",
 };
 const FooterStyles = {
   width: "100%",
@@ -34,9 +35,10 @@ const layoutStyles = {
 };
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <div style={{ ...HeaderStyles }}>
-      <Link to={`/Detail`}>😺</Link>
+      <img src="img/main1.png" alt="logo" onClick={() => navigate("/Index")} />
       <span>우리 주인님을 소개합니다</span>
     </div>
   );
