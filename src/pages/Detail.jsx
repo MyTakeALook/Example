@@ -61,9 +61,12 @@ const Detail = () => {
     }
   };
 
-  const onEditComment = async (e) => {
-    console.log(e);
-    axios.patch(`http://localhost:3001/comments/${e.id}`, e.comment);
+  const onEditComment = async () => {
+    console.log(editcomment);
+    axios.patch(
+      `http://localhost:3001/comments/${editcomment.id}`,
+      editcomment.comment
+    );
     // return window.location.reload();
   };
 
@@ -154,7 +157,8 @@ const Detail = () => {
                   나이 :{" "}
                   <input
                     required
-                    type="text"
+                    type="number"
+                    min="1"
                     placeholder={mycat.age}
                     onChange={(ev) => {
                       setUpdatedCat({
@@ -204,7 +208,6 @@ const Detail = () => {
             </StDetailBox>
           )}
         </StDetailALl>
-        {/* 댓글 시작 */}
         <StCommentAll>
           {!isEditMode && (
             <StContainer isShow={isShow}>
@@ -284,25 +287,34 @@ const Detail = () => {
                     );
                   })}
                   {isCommentEditMode && (
-                    <form
-                      onSubmit={(e) => {
-                        onEditComment(e);
-                      }}
-                    >
-                      <input
-                        required
-                        type="text"
-                        key={mycomment.id}
-                        onChange={(ev) => {
-                          setEditcomment({
-                            ...editcomment,
-                            comment: ev.target.value,
-                            id: mycomment.id,
-                          });
-                        }}
-                      />
-                      <button>댓글 수정 완료</button>
-                    </form>
+                    <>
+                      {mycomment.map((e) => {
+                        console.log(e.id);
+                        if (mycomment.id === e.id) {
+                          return (
+                            <form>
+                              <input
+                                required
+                                type="text"
+                                key={mycomment.id}
+                                onChange={(ev) => {
+                                  setEditcomment({
+                                    ...editcomment,
+                                    comment: ev.target.value,
+                                    id: mycomment.id,
+                                  });
+                                }}
+                              />
+                              <button onClick={onEditComment}>
+                                댓글 수정 완료
+                              </button>
+                            </form>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </>
                   )}
                 </div>
               </StCommentList>
