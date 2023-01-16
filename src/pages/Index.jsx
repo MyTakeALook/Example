@@ -6,10 +6,9 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import styles from "./Index.css";
-// import { Navbar } from "react-bootstrap";
 
 const Index = () => {
-  const [like, seTlike] = useState(0);
+  const [like, seTlike] = useState(false);
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
 
@@ -17,7 +16,9 @@ const Index = () => {
     const { data } = await axios.get("http://localhost:3001/index");
     setCats(data);
   };
-
+  const onClickDeleteCats = (catsId) => {
+    axios.delete(`http://localhost:3001/todos/${catsId}`);
+  };
   useEffect(() => {
     fetchCat();
   }, []);
@@ -42,18 +43,29 @@ const Index = () => {
           >
             🐾아웃이냥
           </Btn>
+          <Btn
+            onClick={() => {
+              navigate("/add");
+            }}
+          >
+            🐾냥추
+          </Btn>
         </Header>
       </div>
-
+      <div>쵝오 고양이</div>
+      <div>냥이 리스트</div>
       <Listt>
         {cats?.map((cat) => {
           return (
             <div key={cat.id}>
               <div>
-                <div className="cat_img"></div>
-                <div to={`/Index/${cat.id}`} key={cat.id}>
-                  <div>asdasd</div>
-                </div>
+                <div
+                  className="cat_img"
+                  onClick={() => {
+                    navigate("/list");
+                  }}
+                ></div>
+                <div to={`/Index/${cat.id}`} key={cat.id}></div>
 
                 <div>
                   <span
@@ -61,7 +73,7 @@ const Index = () => {
                       seTlike(like + 1);
                     }}
                   >
-                    ❤{like}
+                    {setLike}
                   </span>
                 </div>
                 <br></br>
@@ -73,11 +85,19 @@ const Index = () => {
                 <br></br>
                 <div>
                   <span>
-                    <div>
-                      {cat.gender},{cat.age}살
-                    </div>
-                    <div>집사 : {cat.text}</div>
+                    <div>{cat.gender}</div>
+                    <div>{cat.age}살</div>
+                    <div>집사 : {cat.name}</div>
+                    <div>특이사항 : {cat.text}</div>
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClickDeleteCats(cat.id);
+                    }}
+                  >
+                    삭제하기
+                  </button>
                 </div>
               </div>
             </div>
@@ -122,7 +142,7 @@ const Btn = styled.div`
 const Listt = styled.div`
   max-width: 1440px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   place-items: center;
   gap: 70px 0px;
   margin: 0 auto;
