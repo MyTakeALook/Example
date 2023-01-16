@@ -1,22 +1,6 @@
 {
   "index": [
     {
-      "id": 1,
-      "catName": "고양이",
-      "age": "1",
-      "gender": "M",
-      "text": "첫번째 고양이",
-      "imageUrl": "",
-      "love": "0"
-    },
-    {
-      "id": 2,
-      "catName": "q",
-      "age": "qsd",
-      "gender": "qsd",
-      "text": "qsd"
-    },
-    {
       "id": 3,
       "catName": "밀크",
       "age": "3",
@@ -40,34 +24,25 @@
     {
       "id": 6,
       "like": "",
-      "catName": "ㅂㄴㅇ",
-      "age": "ㅂㄴㅇ",
-      "gender": "ㄴㅂㅇㄴ",
-      "text": "ㅂㅇㅂㅇㄴㅇ",
+      "catName": "ad",
+      "age": "qwe",
+      "gender": "qwe",
+      "text": "qwe",
       "image": "",
-      "name": "ㅂㄴㅇ"
-    },
-    {
-      "id": 7,
-      "like": "",
-      "catName": "ㅂㄴㅇㅂㄴㅇ",
-      "age": "ㅇㅂㅇㅂㅇ",
-      "gender": "ㅂㄴㅇㅂㅇㅂ",
-      "text": "ㅂㄴㅇㅂㅇㅂㅇㅂㄴㅇ",
-      "image": "",
-      "name": "ㅂㅇㅂㄴㅇㅂㄴㅇ"
+      "name": "qwe"
     }
   ],
   "comments": [
     {
       "id": 1,
       "comment": "너무 귀엽네요",
-      "username": "정기"
+      "username": "정기",
+      "qsd": ""
     },
     {
-      "id": 2,
-      "comment": "너무 깜찍해요",
-      "username": "병진"
+      "comment": "ㅂㅈㄷ",
+      "username": "ㅂㅈㄷ",
+      "id": 3
     }
   ],
   "users": [

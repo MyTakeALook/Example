@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import Layout from "../shared/Layout";
 
 const Add = () => {
   const navigate = useNavigate();
@@ -21,101 +22,103 @@ const Add = () => {
   };
   return (
     <>
-      <div>
-        <button
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          뒤로가기
-        </button>
+      <Layout>
+        <div>
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            뒤로가기
+          </button>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            onWriteHandler(cats);
-          }}
-        >
-          <div>
-            <input
-              type="text"
-              onChange={(event) => {
-                const { value } = event.target;
-                setCats({
-                  ...cats,
-                  catName: value,
-                });
-              }}
-              placeholder="주인님 존함:"
-              value={cats.catName}
-              name="catName"
-              required
-            />
-            <div></div>
-            <input
-              type="text"
-              onChange={(event) => {
-                const { value } = event.target;
-                setCats({
-                  ...cats,
-                  gender: value,
-                });
-              }}
-              value={cats.gender}
-              placeholder="주인님 성별:"
-              name="gender"
-              required
-            />
-            <div></div>
-            <input
-              type="text"
-              onChange={(event) => {
-                const { value } = event.target;
-                setCats({
-                  ...cats,
-                  age: value,
-                });
-              }}
-              value={cats.age}
-              placeholder="주인님 연세:"
-              name="age"
-              required
-            />
-            <div></div>
-            <input
-              type="text"
-              onChange={(event) => {
-                const { value } = event.target;
-                setCats({
-                  ...cats,
-                  name: value,
-                });
-              }}
-              value={cats.name}
-              placeholder="집사이름:"
-              name="name"
-              required
-            />
-            <div></div>
-            <Textarea
-              name="text"
-              onChange={(event) => {
-                const { value } = event.target;
-                setCats({
-                  ...cats,
-                  text: value,
-                });
-              }}
-              value={cats.text}
-              rows="10"
-              maxLength={200}
-              placeholder="주인님 설명 :"
-              required
-            />
-          </div>
-          <button>저장하기</button>
-        </form>
-      </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onWriteHandler(cats);
+            }}
+          >
+            <div>
+              <input
+                type="text"
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCats({
+                    ...cats,
+                    catName: value,
+                  });
+                }}
+                placeholder="주인님 존함:"
+                value={cats.catName}
+                name="catName"
+                required
+              />
+              <div></div>
+              <input
+                type="text"
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCats({
+                    ...cats,
+                    gender: value,
+                  });
+                }}
+                value={cats.gender}
+                placeholder="주인님 성별:"
+                name="gender"
+                required
+              />
+              <div></div>
+              <input
+                type="text"
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCats({
+                    ...cats,
+                    age: value,
+                  });
+                }}
+                value={cats.age}
+                placeholder="주인님 연세:"
+                name="age"
+                required
+              />
+              <div></div>
+              <input
+                type="text"
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCats({
+                    ...cats,
+                    name: value,
+                  });
+                }}
+                value={cats.name}
+                placeholder="집사이름:"
+                name="name"
+                required
+              />
+              <div></div>
+              <Textarea
+                name="text"
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCats({
+                    ...cats,
+                    text: value,
+                  });
+                }}
+                value={cats.text}
+                rows="10"
+                maxLength={200}
+                placeholder="주인님 설명 :"
+                required
+              />
+            </div>
+            <button>저장하기</button>
+          </form>
+        </div>
+      </Layout>
     </>
   );
 };

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Layout from "../shared/Layout";
 // import styles from "./Index.css";
 
 const Index = () => {
@@ -16,8 +17,9 @@ const Index = () => {
     const { data } = await axios.get("http://localhost:3001/index");
     setCats(data);
   };
-  const onClickDeleteCats = (catsId) => {
-    axios.delete(`http://localhost:3001/todos/${catsId}`);
+  const onClickDeleteCats = (Id) => {
+    axios.delete(`http://localhost:3001/Index/${Id}`);
+    return window.location.reload();
   };
   useEffect(() => {
     fetchCat();
@@ -25,89 +27,90 @@ const Index = () => {
 
   return (
     <div>
-      <Menu>우고소 으름공주꾸미기</Menu>
-
-      <div>
-        <Header>
-          <Btn
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            🐰홈이냥
-          </Btn>
-          <Btn
-            onClick={() => {
-              navigate("/out");
-            }}
-          >
-            🐾아웃이냥
-          </Btn>
-          <Btn
-            onClick={() => {
-              navigate("/Add");
-            }}
-          >
-            🐾냥추
-          </Btn>
-        </Header>
-      </div>
-      <div>쵝오 고양이</div>
-      <div>냥이 리스트</div>
-      <Listt>
-        {cats?.map((cat) => {
-          return (
-            <div key={cat.id}>
-              <div>
-                <div
-                  className="cat_img"
-                  onClick={() => {
-                    navigate(`/Detail/${cat.id}`);
-                  }}
-                >
-                  여기
-                </div>
-                <div to={`/Detail/${cat.id}`} key={cat.id}></div>
+      <Layout>
+        <div>
+          <Header>
+            <Btn
+              onClick={() => {
+                navigate("/Index");
+              }}
+            >
+              🐰홈이냥
+            </Btn>
+            <Btn
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              🐾아웃이냥
+            </Btn>
+            <Btn
+              onClick={() => {
+                navigate("/Add");
+              }}
+            >
+              🐾냥추
+            </Btn>
+          </Header>
+        </div>
+        <div>쵝오 고양이</div>
+        <div>냥이 리스트</div>
+        <Listt>
+          {cats?.map((cat) => {
+            return (
+              <div key={cat.id}>
+                <div>사진 들어갑니다</div>
                 <div>
-                  <span
+                  <StOneCat
                     onClick={() => {
-                      seTlike(like + 1);
+                      navigate(`/Detail/${cat.id}`);
                     }}
+                    key={cat.id}
                   >
-                    {/* {setLike} */}
-                  </span>
-                </div>
-                <br></br>
-                <div>
-                  <span>
-                    <Unit>{cat.catName}</Unit>
-                  </span>
-                </div>
-                <br></br>
-                <div>
-                  <span>
-                    <div>{cat.gender}</div>
-                    <div>{cat.age}살</div>
-                    <div>집사 : {cat.name}</div>
-                    <div>특이사항 : {cat.text}</div>
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onClickDeleteCats(cat.id);
-                    }}
-                  >
-                    삭제하기
-                  </button>
+                    <div>
+                      <span
+                        onClick={() => {
+                          seTlike(like + 1);
+                        }}
+                      >
+                        {/* {setLike} */}
+                      </span>
+                    </div>
+                    <br></br>
+                    <div>
+                      <span>
+                        <Unit>{cat.catName}</Unit>
+                      </span>
+                    </div>
+                    <br></br>
+                    <div>
+                      {/* <span>
+                      <div>{cat.gender}</div>
+                      <div>{cat.age}살</div>
+                      <div>집사 : {cat.name}</div>
+                      <div>특이사항 : {cat.text}</div>
+                    </span> */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onClickDeleteCats(cat.id);
+                        }}
+                      >
+                        삭제하기
+                      </button>
+                    </div>
+                  </StOneCat>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </Listt>
+            );
+          })}
+        </Listt>
+      </Layout>
     </div>
   );
 };
+
+const StOneCat = styled.div``;
 
 const Menu = styled.div`
   font-size: 80px;
