@@ -8,9 +8,9 @@ function Join() {
   const navigate = useNavigate();
   return (
     <>
-      <img src="img/main.png" alt="logo" />
+      <Stimage src="img/main.png" alt="logo" />
       <Stloginbox>
-        <StSignup> 회원가입</StSignup>
+        <StSignup> Sign up🐾(ฅ•.•ฅ)</StSignup>
         <StDiv>
           Name:<input></input>
           <hr></hr>
@@ -50,10 +50,9 @@ const Stloginbox = styled.div`
   margin: 50px auto 0 auto;
   height: 70%;
   width: fit-content;
-  border: 1.5px solid rgb(255, 255, 255);
   background-color: rgba(0, 0, 0, 0.206);
   border-radius: 15px;
-  border: solid black;
+  border: 1px solid black;
 `;
 const StButton = styled.button`
   margin-left: 10px;
@@ -86,4 +85,8 @@ const Stdiv2 = styled.div`
 const StSignup = styled.div`
   font-size: 19px;
   font-weight: bold;
+`;
+const Stimage = styled.img`
+  width: 250px;
+  height: 100px;
 `;
