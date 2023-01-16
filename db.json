@@ -10,13 +10,6 @@
       "love": "0"
     },
     {
-      "id": 2,
-      "catName": "q",
-      "age": "qsd",
-      "gender": "qsd",
-      "text": "qsd"
-    },
-    {
       "id": 3,
       "catName": "밀크",
       "age": "3",
@@ -36,26 +29,6 @@
       "age": "5",
       "gender": "W",
       "text": "다섯번째 고양이"
-    },
-    {
-      "id": 6,
-      "like": "",
-      "catName": "ㅂㄴㅇ",
-      "age": "ㅂㄴㅇ",
-      "gender": "ㄴㅂㅇㄴ",
-      "text": "ㅂㅇㅂㅇㄴㅇ",
-      "image": "",
-      "name": "ㅂㄴㅇ"
-    },
-    {
-      "id": 7,
-      "like": "",
-      "catName": "ㅂㄴㅇㅂㄴㅇ",
-      "age": "ㅇㅂㅇㅂㅇ",
-      "gender": "ㅂㄴㅇㅂㅇㅂ",
-      "text": "ㅂㄴㅇㅂㅇㅂㅇㅂㄴㅇ",
-      "image": "",
-      "name": "ㅂㅇㅂㄴㅇㅂㄴㅇ"
     }
   ],
   "comments": [

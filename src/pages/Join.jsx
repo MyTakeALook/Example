@@ -22,7 +22,7 @@ function Join() {
         <Stdiv2>
           <StButton
             onClick={() => {
-              navigate("/Index");
+              navigate("/");
             }}
           >
             register
@@ -30,7 +30,7 @@ function Join() {
 
           <StButton
             onClick={() => {
-              navigate("/Login");
+              navigate("/");
             }}
           >
             cancel

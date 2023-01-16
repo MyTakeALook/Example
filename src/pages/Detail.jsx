@@ -89,226 +89,228 @@ const Detail = () => {
   }, []);
 
   return (
-    <Layout>
-      <StDetailALl>
-        {!isEditMode && (
-          <StDetailBox>
-            <StPicwithDesc>
-              <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
-              <StDecsBox>
-                {mycat.catName}
-                <br />
-                {mycat.age}
-                <br />
-                {mycat.gender}
-                <br />
-                {mycat.text}
-              </StDecsBox>
-            </StPicwithDesc>
-            <button
-              size="large"
-              onClick={() => {
-                setIsEditMode(true);
-              }}
-            >
-              글 수정
-            </button>
-            <button
-              size="large"
-              onClick={() => {
-                onDeletThisCat(id);
-              }}
-            >
-              글 삭제
-            </button>
-            <StLoveVIew>
-              <StLove>💜 {mycat.love}</StLove>
-              <StView>뷰 들어가는데</StView>
-            </StLoveVIew>
-          </StDetailBox>
-        )}
-        {isEditMode && (
-          <StDetailBox>
-            <StDecsBox>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  onEditThisCat(updatedCat);
-                  setIsEditMode(false);
-                }}
-              >
-                이름 :{" "}
-                <input
-                  required
-                  type="text"
-                  placeholder={mycat.catName}
-                  onChange={(ev) => {
-                    setUpdatedCat({
-                      ...updatedCat,
-                      catName: ev.target.value,
-                    });
-                  }}
-                />
-                <br />
-                나이 :{" "}
-                <input
-                  required
-                  type="text"
-                  placeholder={mycat.age}
-                  onChange={(ev) => {
-                    setUpdatedCat({
-                      ...updatedCat,
-                      age: ev.target.value,
-                    });
-                  }}
-                />
-                <br />
-                성별 :{" "}
-                <input
-                  required
-                  type="text"
-                  placeholder={mycat.gender}
-                  onChange={(ev) => {
-                    setUpdatedCat({
-                      ...updatedCat,
-                      gender: ev.target.value,
-                    });
-                  }}
-                />
-                <br />
-                설명 :{" "}
-                <input
-                  required
-                  type="text"
-                  placeholder={mycat.text}
-                  onChange={(ev) => {
-                    setUpdatedCat({
-                      ...updatedCat,
-                      text: ev.target.value,
-                    });
-                  }}
-                />
-                <br />
-                <button size="large">저장</button>
-              </form>
+    <>
+      <Layout>
+        <StDetailALl>
+          {!isEditMode && (
+            <StDetailBox>
+              <StPicwithDesc>
+                <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
+                <StDecsBox>
+                  {mycat.catName}
+                  <br />
+                  {mycat.age}
+                  <br />
+                  {mycat.gender}
+                  <br />
+                  {mycat.text}
+                </StDecsBox>
+              </StPicwithDesc>
               <button
                 size="large"
                 onClick={() => {
-                  setIsEditMode(false);
+                  setIsEditMode(true);
                 }}
               >
-                뒤로
+                글 수정
               </button>
-            </StDecsBox>
-          </StDetailBox>
-        )}
-      </StDetailALl>
-      {/* 댓글 시작 */}
-      <StCommentAll>
-        {!isEditMode && (
-          <StContainer isShow={isShow}>
-            <StToggleContainer
-              onClick={() => {
-                setisShow((pre) => !pre);
-              }}
-            >
-              <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
-            </StToggleContainer>
-            <StCommentList>
-              <div>
-                {!isCommentEditMode && (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      submitCommentHandler(newcomment);
+              <button
+                size="large"
+                onClick={() => {
+                  onDeletThisCat(id);
+                }}
+              >
+                글 삭제
+              </button>
+              <StLoveVIew>
+                <StLove>💜 {mycat.love}</StLove>
+                <StView>뷰 들어가는데</StView>
+              </StLoveVIew>
+            </StDetailBox>
+          )}
+          {isEditMode && (
+            <StDetailBox>
+              <StDecsBox>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    onEditThisCat(updatedCat);
+                    setIsEditMode(false);
+                  }}
+                >
+                  이름 :{" "}
+                  <input
+                    required
+                    type="text"
+                    placeholder={mycat.catName}
+                    onChange={(ev) => {
+                      setUpdatedCat({
+                        ...updatedCat,
+                        catName: ev.target.value,
+                      });
                     }}
-                  >
-                    <input
-                      required
-                      type="text"
-                      name="comment"
-                      value={newcomment.comment}
-                      placeholder="🎶comment🎶"
-                      onChange={(ev) => {
-                        const { value } = ev.target;
-                        setNewcomment({
-                          ...newcomment,
-                          comment: value,
-                        });
-                      }}
-                    />
-                    <input
-                      required
-                      type="text"
-                      name="username"
-                      placeholder="🎶username🎶"
-                      value={newcomment.username}
-                      onChange={(ev) => {
-                        const { value } = ev.target;
-                        setNewcomment({
-                          ...newcomment,
-                          username: value,
-                        });
-                      }}
-                    />
-                    <StButton>댓글작성</StButton>
-                  </form>
-                )}
-                {mycomment?.map((mycomment) => {
-                  return (
-                    <div key={mycomment.id}>
-                      {!isCommentEditMode && (
-                        <StCommentBox>
-                          {mycomment.comment} : {mycomment.username}
-                          <br />
-                          <button
-                            size="large"
-                            onClick={() => {
-                              setIsCommentEditMode(true);
-                            }}
-                          >
-                            댓글 수정
-                          </button>
-                          <button
-                            size="large"
-                            onClick={() => {
-                              onDeleteComment(mycomment.id);
-                            }}
-                          >
-                            댓글 삭제
-                          </button>
-                        </StCommentBox>
-                      )}
-                    </div>
-                  );
-                })}
-                {isCommentEditMode && (
-                  <form
-                    onSubmit={(e) => {
-                      onEditComment(e);
+                  />
+                  <br />
+                  나이 :{" "}
+                  <input
+                    required
+                    type="text"
+                    placeholder={mycat.age}
+                    onChange={(ev) => {
+                      setUpdatedCat({
+                        ...updatedCat,
+                        age: ev.target.value,
+                      });
                     }}
-                  >
-                    <input
-                      required
-                      type="text"
-                      key={mycomment.id}
-                      onChange={(ev) => {
-                        setEditcomment({
-                          ...editcomment,
-                          comment: ev.target.value,
-                          id: mycomment.id,
-                        });
+                  />
+                  <br />
+                  성별 :{" "}
+                  <input
+                    required
+                    type="text"
+                    placeholder={mycat.gender}
+                    onChange={(ev) => {
+                      setUpdatedCat({
+                        ...updatedCat,
+                        gender: ev.target.value,
+                      });
+                    }}
+                  />
+                  <br />
+                  설명 :{" "}
+                  <input
+                    required
+                    type="text"
+                    placeholder={mycat.text}
+                    onChange={(ev) => {
+                      setUpdatedCat({
+                        ...updatedCat,
+                        text: ev.target.value,
+                      });
+                    }}
+                  />
+                  <br />
+                  <button size="large">저장</button>
+                </form>
+                <button
+                  size="large"
+                  onClick={() => {
+                    setIsEditMode(false);
+                  }}
+                >
+                  뒤로
+                </button>
+              </StDecsBox>
+            </StDetailBox>
+          )}
+        </StDetailALl>
+        {/* 댓글 시작 */}
+        <StCommentAll>
+          {!isEditMode && (
+            <StContainer isShow={isShow}>
+              <StToggleContainer
+                onClick={() => {
+                  setisShow((pre) => !pre);
+                }}
+              >
+                <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
+              </StToggleContainer>
+              <StCommentList>
+                <div>
+                  {!isCommentEditMode && (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        submitCommentHandler(newcomment);
                       }}
-                    />
-                    <button>댓글 수정 완료</button>
-                  </form>
-                )}
-              </div>
-            </StCommentList>
-          </StContainer>
-        )}
-      </StCommentAll>
-    </Layout>
+                    >
+                      <input
+                        required
+                        type="text"
+                        name="comment"
+                        value={newcomment.comment}
+                        placeholder="🎶comment🎶"
+                        onChange={(ev) => {
+                          const { value } = ev.target;
+                          setNewcomment({
+                            ...newcomment,
+                            comment: value,
+                          });
+                        }}
+                      />
+                      <input
+                        required
+                        type="text"
+                        name="username"
+                        placeholder="🎶username🎶"
+                        value={newcomment.username}
+                        onChange={(ev) => {
+                          const { value } = ev.target;
+                          setNewcomment({
+                            ...newcomment,
+                            username: value,
+                          });
+                        }}
+                      />
+                      <StButton>댓글작성</StButton>
+                    </form>
+                  )}
+                  {mycomment?.map((mycomment) => {
+                    return (
+                      <div key={mycomment.id}>
+                        {!isCommentEditMode && (
+                          <StCommentBox>
+                            {mycomment.comment} : {mycomment.username}
+                            <br />
+                            <button
+                              size="large"
+                              onClick={() => {
+                                setIsCommentEditMode(true);
+                              }}
+                            >
+                              댓글 수정
+                            </button>
+                            <button
+                              size="large"
+                              onClick={() => {
+                                onDeleteComment(mycomment.id);
+                              }}
+                            >
+                              댓글 삭제
+                            </button>
+                          </StCommentBox>
+                        )}
+                      </div>
+                    );
+                  })}
+                  {isCommentEditMode && (
+                    <form
+                      onSubmit={(e) => {
+                        onEditComment(e);
+                      }}
+                    >
+                      <input
+                        required
+                        type="text"
+                        key={mycomment.id}
+                        onChange={(ev) => {
+                          setEditcomment({
+                            ...editcomment,
+                            comment: ev.target.value,
+                            id: mycomment.id,
+                          });
+                        }}
+                      />
+                      <button>댓글 수정 완료</button>
+                    </form>
+                  )}
+                </div>
+              </StCommentList>
+            </StContainer>
+          )}
+        </StCommentAll>
+      </Layout>
+    </>
   );
 };
 
