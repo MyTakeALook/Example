@@ -1,46 +1,42 @@
 {
   "index": [
     {
-      "id": 3,
+      "id": 1,
       "catName": "밀크",
       "age": "3",
       "gender": "W",
-      "text": "세번째 고양이"
+      "text": "세번째 고양이",
+      "love": 0,
+      "like": ""
     },
     {
-      "id": 4,
+      "id": 2,
       "catName": "꼬마고양이",
       "age": "4",
       "gender": "W",
-      "text": "네번째 고양이"
+      "text": "네번째 고양이",
+      "love": 2,
+      "like": ""
     },
     {
-      "id": 5,
+      "id": 3,
       "catName": "타뮤",
       "age": "5",
       "gender": "W",
-      "text": "다섯번째 고양이"
-    },
-    {
-      "id": 6,
-      "like": "",
-      "catName": "ad",
-      "age": "qwe",
-      "gender": "qwe",
-      "text": "qwe",
-      "image": "",
-      "name": "qwe"
+      "text": "다섯번째 고양이",
+      "love": 3,
+      "like": ""
     }
   ],
   "comments": [
     {
       "id": 1,
-      "listid": 1,
+      "listid": "1",
       "comment": "ㅂㄴㅇ",
       "username": "정기"
     },
     {
-      "listid": 1,
+      "listid": "1",
       "id": 2,
       "comment": "ㅂㄴㅇㅁㄴㅇ",
       "username": "정기"
@@ -50,12 +46,6 @@
       "comment": "추가",
       "listid": "1",
       "id": 3
-    },
-    {
-      "username": "댓글",
-      "comment": "없네요",
-      "listid": "3",
-      "id": 4
     },
     {
       "username": "하나더 추",
@@ -68,6 +58,12 @@
       "comment": "됩니다",
       "listid": "3",
       "id": 6
+    },
+    {
+      "username": "꼬마",
+      "comment": "타뮤",
+      "listid": "4",
+      "id": 7
     }
   ],
   "users": [

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css";
-// import "./Index.css";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import Layout from "../shared/Layout";
-// import styles from "./Index.css";
+import Love from "./Love/Love";
 
 const Index = () => {
   const [like, seTlike] = useState(false);
@@ -17,10 +15,16 @@ const Index = () => {
     const { data } = await axios.get("http://localhost:3001/index");
     setCats(data);
   };
-  const onClickDeleteCats = (Id) => {
-    axios.delete(`http://localhost:3001/Index/${Id}`);
-    return window.location.reload();
+  const onClickDeleteCats = async (Id) => {
+    const result = window.confirm("삭제하시겠습니까?");
+    if (result) {
+      await axios.delete(`http://localhost:3001/Index/${Id}`);
+      return window.location.reload();
+    } else {
+      return;
+    }
   };
+
   useEffect(() => {
     fetchCat();
   }, []);
@@ -53,43 +57,30 @@ const Index = () => {
             </Btn>
           </Header>
         </div>
-        <div>쵝오 고양이</div>
-        <div>냥이 리스트</div>
         <Listt>
           {cats?.map((cat) => {
+            console.log(cat.love);
             return (
-              <div key={cat.id}>
-                <div>사진 들어갑니다</div>
+              <StOneCatBox key={cat.id}>
+                <div
+                  onClick={() => {
+                    navigate(`/Detail/${cat.id}`);
+                  }}
+                  key={cat.id}
+                >
+                  디테일(사진들어갈예정)
+                </div>
                 <div>
-                  <StOneCat
-                    onClick={() => {
-                      navigate(`/Detail/${cat.id}`);
-                    }}
-                    key={cat.id}
-                  >
-                    <div>
-                      <span
-                        onClick={() => {
-                          seTlike(like + 1);
-                        }}
-                      >
-                        {/* {setLike} */}
-                      </span>
-                    </div>
-                    <br></br>
+                  <StOneCat>
+                    <br />
                     <div>
                       <span>
                         <Unit>{cat.catName}</Unit>
                       </span>
                     </div>
-                    <br></br>
+
+                    <br />
                     <div>
-                      {/* <span>
-                      <div>{cat.gender}</div>
-                      <div>{cat.age}살</div>
-                      <div>집사 : {cat.name}</div>
-                      <div>특이사항 : {cat.text}</div>
-                    </span> */}
                       <button
                         type="button"
                         onClick={() => {
@@ -99,9 +90,10 @@ const Index = () => {
                         삭제하기
                       </button>
                     </div>
+                    <Love key={cat.id} cat={cat} />
                   </StOneCat>
                 </div>
-              </div>
+              </StOneCatBox>
             );
           })}
         </Listt>
@@ -110,19 +102,12 @@ const Index = () => {
   );
 };
 
-const StOneCat = styled.div``;
-
-const Menu = styled.div`
-  font-size: 80px;
-  width: 80%;
-  border: 4px solid;
-  min-height: 100px;
-  border-radius: 12px;
-  padding: 10px 100px 10px 100px;
-  margin: 10px 100px 10px 100px;
-  margin-left: auto;
-  margin-right: auto;
+const StOneCatBox = styled.div`
+  margin-left: 20px;
+  border: 1px solid gray;
 `;
+
+const StOneCat = styled.div``;
 
 const Header = styled.div`
   height: 60px;
@@ -149,7 +134,6 @@ const Listt = styled.div`
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
   gap: 70px 0px;
-  margin: 0 auto;
   margin-top: 35px;
 `;
 
