@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Layout from "../shared/Layout";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Comments from "./Comments/Comments";
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const Detail = () => {
   // 게시물 CRUD
   const onEditThisCat = (e) => {
     axios.patch(`http://localhost:3001/index/${id}`, e);
-    // return window.location.reload();
+    return window.location.reload();
   };
 
   const onDeletThisCat = () => {
@@ -31,43 +32,6 @@ const Detail = () => {
     } else {
       return;
     }
-  };
-
-  //댓글 CRUD
-  const [isShow, setisShow] = useState(false);
-  const [mycomment, setMycomment] = useState([]);
-  const [isCommentEditMode, setIsCommentEditMode] = useState(false);
-  const [newcomment, setNewcomment] = useState({
-    comment: "",
-    username: "",
-  });
-  const [editcomment, setEditcomment] = useState({
-    comment: "",
-    id: "",
-  });
-
-  const submitCommentHandler = async (comment) => {
-    await axios.post(`http://localhost:3001/comments`, comment);
-    // return window.location.reload();
-  };
-
-  const onDeleteComment = async (id) => {
-    const result = window.confirm("삭제하시겠습니까?");
-    if (result) {
-      await axios.delete(`http://localhost:3001/comments/${id}`);
-      // return window.location.reload();
-    } else {
-      return;
-    }
-  };
-
-  const onEditComment = async () => {
-    console.log(editcomment);
-    axios.patch(
-      `http://localhost:3001/comments/${editcomment.id}`,
-      editcomment.comment
-    );
-    // return window.location.reload();
   };
 
   useEffect(() => {
@@ -85,10 +49,6 @@ const Detail = () => {
       .catch(function (error) {
         console.log(error);
       });
-    // 고양이별 댓글 GET
-    axios.get(`http://localhost:3001/comments`).then((res) => {
-      setMycomment(res.data);
-    });
   }, []);
 
   return (
@@ -98,7 +58,7 @@ const Detail = () => {
           {!isEditMode && (
             <StDetailBox>
               <StPicwithDesc>
-                <StCatPic>그림넣는거 채정님한테 물어보기</StCatPic>
+                <StCatPic>그림</StCatPic>
                 <StDecsBox>
                   {mycat.catName}
                   <br />
@@ -208,119 +168,7 @@ const Detail = () => {
             </StDetailBox>
           )}
         </StDetailALl>
-        <StCommentAll>
-          {!isEditMode && (
-            <StContainer isShow={isShow}>
-              <StToggleContainer
-                onClick={() => {
-                  setisShow((pre) => !pre);
-                }}
-              >
-                <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
-              </StToggleContainer>
-              <StCommentList>
-                <div>
-                  {!isCommentEditMode && (
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        submitCommentHandler(newcomment);
-                      }}
-                    >
-                      <input
-                        required
-                        type="text"
-                        name="comment"
-                        value={newcomment.comment}
-                        placeholder="🎶comment🎶"
-                        onChange={(ev) => {
-                          const { value } = ev.target;
-                          setNewcomment({
-                            ...newcomment,
-                            comment: value,
-                          });
-                        }}
-                      />
-                      <input
-                        required
-                        type="text"
-                        name="username"
-                        placeholder="🎶username🎶"
-                        value={newcomment.username}
-                        onChange={(ev) => {
-                          const { value } = ev.target;
-                          setNewcomment({
-                            ...newcomment,
-                            username: value,
-                          });
-                        }}
-                      />
-                      <StButton>댓글작성</StButton>
-                    </form>
-                  )}
-                  {mycomment?.map((mycomment) => {
-                    return (
-                      <div key={mycomment.id}>
-                        {!isCommentEditMode && (
-                          <StCommentBox>
-                            {mycomment.comment} : {mycomment.username}
-                            <br />
-                            <button
-                              size="large"
-                              onClick={() => {
-                                setIsCommentEditMode(true);
-                              }}
-                            >
-                              댓글 수정
-                            </button>
-                            <button
-                              size="large"
-                              onClick={() => {
-                                onDeleteComment(mycomment.id);
-                              }}
-                            >
-                              댓글 삭제
-                            </button>
-                          </StCommentBox>
-                        )}
-                      </div>
-                    );
-                  })}
-                  {isCommentEditMode && (
-                    <>
-                      {mycomment.map((e) => {
-                        console.log(e.id);
-                        if (mycomment.id === e.id) {
-                          return (
-                            <form>
-                              <input
-                                required
-                                type="text"
-                                key={mycomment.id}
-                                onChange={(ev) => {
-                                  setEditcomment({
-                                    ...editcomment,
-                                    comment: ev.target.value,
-                                    id: mycomment.id,
-                                  });
-                                }}
-                              />
-                              <button onClick={onEditComment}>
-                                댓글 수정 완료
-                              </button>
-                            </form>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                    </>
-                  )}
-                </div>
-              </StCommentList>
-            </StContainer>
-          )}
-        </StCommentAll>
+        <Comments />
       </Layout>
     </>
   );
@@ -384,39 +232,4 @@ const StView = styled.div`
   border: 1px solid red;
   width: 200px;
   height: 40px;
-`;
-
-const StButton = styled.button`
-  background-color: beige;
-  margin-left: 30px;
-`;
-
-const StCommentBox = styled.div`
-  margin: 10px 0 0;
-  border: 1px solid black;
-  width: 500px;
-  height: 80px;
-`;
-
-const StCommentAll = styled.div``;
-///댓글 기능
-const StContainer = styled.div`
-  height: ${({ isShow }) => (isShow ? "400px" : "40px")};
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  background-color: #fff;
-  transition: height 400ms ease-in-out;
-`;
-
-const StToggleContainer = styled.div`
-  height: 50px;
-  padding: 0 12px;
-  border-top: 1px solid #eee;
-`;
-
-const StCommentList = styled.div`
-  height: 350px;
-  overflow: scroll;
 `;

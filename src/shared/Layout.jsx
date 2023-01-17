@@ -38,7 +38,11 @@ function Header() {
   const navigate = useNavigate();
   return (
     <div style={{ ...HeaderStyles }}>
-      <img src="img/main1.png" alt="logo" onClick={() => navigate("/Index")} />
+      <img
+        src={process.env.PUBLIC_URL + "img/main1.png"}
+        alt="logo"
+        onClick={() => navigate("/Index")}
+      />
       <span>우리 주인님을 소개합니다</span>
     </div>
   );
