@@ -7,14 +7,14 @@ import Layout from "../shared/Layout";
 import Love from "./Love/Love";
 
 const Index = () => {
-  const [like, seTlike] = useState(false);
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get("http://localhost:3001/index");
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index`);
     setCats(data);
   };
+
   const onClickDeleteCats = async (Id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
@@ -59,7 +59,6 @@ const Index = () => {
         </div>
         <Listt>
           {cats?.map((cat) => {
-            console.log(cat.love);
             return (
               <StOneCatBox key={cat.id}>
                 <div

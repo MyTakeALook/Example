@@ -7,16 +7,20 @@ import styled from "styled-components";
 import { TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import AuthContext from "../context/AuthProvider";
+import AuthContext from "./context/AuthProvider";
+import { useCookies } from "react-cookie";
 // import { useCookies } from "react-cookie";
-const LOGIN_URL = "/auth";
 
-const DummyUser = {
-  id: "angela@gmail.com",
-  password: "test123",
-};
+const LOGIN_URL = "/auth";
+//url을 수정해야한다.
+
+// const DummyUser = {
+//   id: "angela@gmail.com",
+//   password: "test123",
+// };
 
 function Login() {
+  const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -30,17 +34,17 @@ function Login() {
   };
   //////더미데이터쓰는거/////
 
-  const { setAuth } = useContext(AuthContext);
-  const userRef = useRef();
-  const errRef = useRef();
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const { setAuth } = useContext(AuthContext); //contextapi 이다? 채정님은 알고 계신지
+  // const userRef = useRef();
+  // const errRef = useRef();
+  // const [errMsg, setErrMsg] = useState("");
+  // const [success, setSuccess] = useState(false);
   // useEffect(() => {
   //   // userRef.current.focus();
   // }, []);
 
   useEffect(() => {
-    setErrMsg("");
+    // setErrMsg("");
   }, [id, password]);
 
   const handleSubmit = async (e) => {
@@ -49,31 +53,32 @@ function Login() {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ id, password }),
+        // JSON.stringify({ id, password }), //json 을 왜썻는지?  stringify 배열을 객체로 //데이터 전달과 수신이 어렵다
         {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+          // headers: { "Content-Type": "application/json" }, //왜 넣었는지?
+          // withCredentials: true, //cors 뚫어주는거
         }
       );
       console.log(JSON.stringify(response?.data));
       //console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ id, password, roles, accessToken });
-      setId("");
-      setPassword("");
-      setSuccess(true);
+      const accessToken = response?.data?.accessToken; //토큰 받은거
+      setCookie("Authorization", accessToken);
+      // const roles = response?.data?.roles; //관리자냐 유저냐 인데 필요 없다
+      // setAuth({ id, password, roles, accessToken }); //이거 지금 쓸 개념 난이도가 아닙니다.
+      // setId("");
+      // setPassword("");
+      // setSuccess(true);
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg("서버가 응답하지 않습니다");
-      } else if (err.response?.status === 400) {
-        setErrMsg("이메일과 패스워드를 모두 입력해주세요");
-      } else if (err.response?.status === 401) {
-        setErrMsg("회원정보가 존재하지 않습니다");
-      } else {
-        setErrMsg("로그인에 실패하였습니다");
-      }
-      errRef.current.focus();
+      // if (!err?.response) {
+      //   setErrMsg("서버가 응답하지 않습니다");
+      // } else if (err.response?.status === 400) {
+      //   setErrMsg("이메일과 패스워드를 모두 입력해주세요");
+      // } else if (err.response?.status === 401) {
+      //   setErrMsg("회원정보가 존재하지 않습니다");
+      // } else {
+      setErrMsg("로그인에 실패하였습니다");
+      // }
+      // errRef.current.focus();
     }
   };
 

@@ -64,7 +64,6 @@ const Comment = ({ comment }) => {
           <button onClick={() => onEditComment(editcomment)}>
             댓글 수정 완료
           </button>
-          {/* <button onClick={setIsCommentEditMode(false)}>댓글 수정 취소</button> */}
         </form>
       )}
     </>

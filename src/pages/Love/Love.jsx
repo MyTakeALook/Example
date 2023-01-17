@@ -6,35 +6,46 @@ const Love = ({ cat }) => {
   const [love, setLove] = useState(cat.love);
   const [isLove, setIsLove] = useState(false);
 
-  const onEditLove = async (e) => {
-    console.log(e);
-    await axios.patch(`http://localhost:3001/index/${cat.love}`, e);
+  const onEditLove = async () => {
+    await axios.patch(`http://localhost:3001/index/${cat.id}`, { love: love });
   };
 
   return (
     <>
       {isLove ? (
-        <form>
-          <div
-            onClick={() => {
-              setIsLove(false);
-              setLove(love - 1);
-              onEditLove(love);
-            }}
-          >
-            💜 {love}
-          </div>
-        </form>
-      ) : (
-        <div
-          onClick={() => {
-            setIsLove(true);
-            setLove(love + 1);
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
             onEditLove(love);
           }}
         >
-          🤍 {love}
-        </div>
+          <button
+            type="submit"
+            onClick={() => {
+              setIsLove(false);
+              setLove(love - 1);
+            }}
+          >
+            💜 {love}
+          </button>
+        </form>
+      ) : (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onEditLove(love);
+          }}
+        >
+          <button
+            type="submit"
+            onClick={() => {
+              setIsLove(true);
+              setLove(love + 1);
+            }}
+          >
+            🤍 {love}
+          </button>
+        </form>
       )}
     </>
   );
