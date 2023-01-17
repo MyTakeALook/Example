@@ -1,5 +1,5 @@
 import Router from "../shared/Router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // axios import 합니다
@@ -41,7 +41,7 @@ function Join() {
           // localStorage.setItem("token", response.data.jwt);//jwt이용하지않는다.
           console.log(response);
           alert("회원가입 성공! 로그인으로 이동합니다");
-          navigate("/");
+          window.location.replace("/");
         })
         .catch((error) => {
           // Handle error.
@@ -107,7 +107,7 @@ function Join() {
 
           <StButton
             onClick={() => {
-              navigate("/");
+              window.location.replace("/");
             }}
           >
             cancel
@@ -158,6 +158,7 @@ const StDiv = styled.div`
 const Stdiv2 = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 30px;
 `;
 const StSignup = styled.div`
   font-size: 19px;
