@@ -67,14 +67,14 @@ function Join() {
             placeholder="이름을 입력하세요."
           />
           <hr></hr>
-          ID:
+          Email:
           <TextField
             required
             onChange={(event) => {
               setId(event.target.value);
             }}
             value={id}
-            placeholder="이용하실 id를 입력하세요."
+            placeholder="이메일을 입력하세요."
           />
           <hr></hr>
           Password:
@@ -127,9 +127,9 @@ const Stloginbox = styled.div`
   margin: 50px auto 0 auto;
   height: 70%;
   width: 300px;
-  background-color: rgba(0, 0, 0, 0.206);
+  background-color: #dadada;
   border-radius: 15px;
-  border: 1px solid black;
+  border: none;
 `;
 const StButton = styled.button`
   margin: auto;
@@ -149,6 +149,7 @@ const StButton = styled.button`
   font-weight: bold;
   font-size: 13px;
   color: white;
+  cursor: pointer;
 `;
 const StDiv = styled.div`
   margin-top: 30px;

@@ -1,5 +1,5 @@
 import Router from "../shared/Router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "../App.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios"; // axios import 합니다
@@ -7,56 +7,123 @@ import styled from "styled-components";
 import { TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import AuthContext from "../context/AuthProvider";
+// import { useCookies } from "react-cookie";
+const LOGIN_URL = "/auth";
+
+const DummyUser = {
+  id: "angela@gmail.com",
+  password: "test123",
+};
 
 function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const onClickConfirmButton = () => {
+    if (id === DummyUser.id && password === DummyUser.password) {
+      alert("로그인에 성공헀습니다! ");
+      navigate(`/Index`);
+    } else {
+      alert("등록되지 않은 회원입니다! ");
+    }
+  };
+  //////더미데이터쓰는거/////
+
+  const { setAuth } = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  // useEffect(() => {
+  //   // userRef.current.focus();
+  // }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [id, password]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ id, password }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      //console.log(JSON.stringify(response));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ id, password, roles, accessToken });
+      setId("");
+      setPassword("");
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("서버가 응답하지 않습니다");
+      } else if (err.response?.status === 400) {
+        setErrMsg("이메일과 패스워드를 모두 입력해주세요");
+      } else if (err.response?.status === 401) {
+        setErrMsg("회원정보가 존재하지 않습니다");
+      } else {
+        setErrMsg("로그인에 실패하였습니다");
+      }
+      errRef.current.focus();
+    }
+  };
 
   return (
     <>
       <Stimage src="img/main.png" alt="logo" />
       <Stloginbox>
         <StLogin> Log in 🐾(ฅ•.•ฅ) </StLogin>
-        <StDiv>
-          ID:
+        <StDiv onSubmit={handleSubmit}>
+          Email:
+          <hr />
           <TextField
             required
             autoFocus
-            fullWidths
+            autoComplete="false"
             type="text"
             id="id"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            label="ID를 입력해주세요."
+            label="이메일을 입력해주세요."
           />
-          <hr></hr>
+          <hr />
           Password:
+          <hr />
           <TextField
             required
-            fullWidth
+            autoComplete="false"
             type="password"
             value={password}
             id="password"
             onChange={(e) => setPassword(e.target.value)}
             label="비밀번호를 입력해주세요"
-          />{" "}
+          />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-        </StDiv>{" "}
+        </StDiv>
         <Stdiv2>
           <StButton
             type="submit"
-            onClick={() => {
-              navigate("/Index");
-            }}
+            onClick={onClickConfirmButton}
+            // onClick={() => {
+            //   navigate("/Index");
+            // }}
           >
             login
-          </StButton>{" "}
+          </StButton>
           <Link to={"/Join"}>
-            허걱! 아직 아이디가 없으신가요? 회원가입하러가기!{" "}
+            허걱! 아직 회원이 아니신가요? 회원가입하러가기!{" "}
           </Link>
         </Stdiv2>
       </Stloginbox>
@@ -73,10 +140,9 @@ const Stloginbox = styled.div`
   margin: 50px auto 0 auto;
   height: 70%;
   width: fit-content;
-  border: 1.5px solid rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.206);
+  background-color: #dadada;
   border-radius: 15px;
-  border: solid black 1px;
+  border: none;
 `;
 const StButton = styled.button`
   margin: auto auto 30px auto;
@@ -96,14 +162,16 @@ const StButton = styled.button`
   font-weight: bold;
   font-size: 13px;
   color: white;
+  cursor: pointer;
+  /* font-family: "Noto Sans KR", sans-serif; */
 `;
 
-const StDiv = styled.div`
-  margin-top: 10px;
+const StDiv = styled.form`
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
 `;
-const Stdiv2 = styled.div`
+const Stdiv2 = styled.form`
   display: flex;
   flex-direction: column;
 `;
