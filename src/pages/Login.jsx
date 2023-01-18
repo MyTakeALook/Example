@@ -7,22 +7,23 @@ import styled from "styled-components";
 import { TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import AuthContext from "./context/AuthProvider";
+// import AuthContext from "./context/AuthProvider";
 import { useCookies } from "react-cookie";
 // import { useCookies } from "react-cookie";
 
-const LOGIN_URL = "/auth";
+// const LOGIN_URL = "/auth";
 //url을 수정해야한다.
 
-// const DummyUser = {
-//   id: "angela@gmail.com",
-//   password: "test123",
-// };
+const DummyUser = {
+  id: "angela@gmail.com",
+  password: "test123",
+};
 
 function Login() {
   const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const onClickConfirmButton = () => {
     if (id === DummyUser.id && password === DummyUser.password) {
@@ -37,14 +38,14 @@ function Login() {
   // const { setAuth } = useContext(AuthContext); //contextapi 이다? 채정님은 알고 계신지
   // const userRef = useRef();
   // const errRef = useRef();
-  // const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   // const [success, setSuccess] = useState(false);
   // useEffect(() => {
   //   // userRef.current.focus();
   // }, []);
 
   useEffect(() => {
-    // setErrMsg("");
+    setErrMsg("");
   }, [id, password]);
 
   const handleSubmit = async (e) => {
@@ -52,7 +53,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        `${process.env.REACT_APP_CAT}/user/login`,
         // JSON.stringify({ id, password }), //json 을 왜썻는지?  stringify 배열을 객체로 //데이터 전달과 수신이 어렵다
         {
           // headers: { "Content-Type": "application/json" }, //왜 넣었는지?

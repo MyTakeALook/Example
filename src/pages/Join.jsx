@@ -11,7 +11,7 @@ import { TextField } from "@mui/material";
 
 function Join() {
   const [confirmpassword, setConfirmpassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate;
@@ -22,7 +22,7 @@ function Join() {
   const register = () => {
     if (password.length < 5) {
       alert("비밀번호는 5자리 이상이어야합니다.");
-    } else if (name.length < 1) {
+    } else if (username.length < 1) {
       alert("이름을 작성해주세요!");
     } else if (id.length < 1) {
       alert("아이디를 작성해주세요! ");
@@ -34,12 +34,12 @@ function Join() {
       axios({
         method: "post",
         url: `${process.env.REACT_APP_CAT}/user/signup`,
-        data: { name: name, email: id, password: password },
+        data: { username: username, email: id, password: password },
       })
         .then((response) => {
           // Handle success.
           console.log("Well done!");
-          console.log("User profile", response.data.name, response.data.id);
+          console.log("User profile", response.data.username, response.data.id);
           //이게 마중나오는 개념인지?????????
           // localStorage.setItem("token", response.data.jwt); //있어도 되고 없어도 되는데 리덕스를 사용하지 않으면 필수 // context.api 공부하세요
           console.log(response);
@@ -66,7 +66,7 @@ function Join() {
             onChange={(event) => {
               setName(event.target.value);
             }}
-            value={name}
+            value={username}
             placeholder="이름을 입력하세요."
           />
           <hr></hr>
