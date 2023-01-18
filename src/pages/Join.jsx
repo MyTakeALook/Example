@@ -8,11 +8,11 @@ import { TextField } from "@mui/material";
 
 // axios.defaults.baseURL = "http://localhost:3001/";
 // axios.defaults.withCredentials = true;
-
+//hi
 function Join() {
   const [confirmpassword, setConfirmpassword] = useState("");
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
+  const [username, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate;
 
@@ -22,32 +22,51 @@ function Join() {
   const register = () => {
     if (password.length < 5) {
       alert("비밀번호는 5자리 이상이어야합니다.");
-    } else if (name.length < 1) {
+    } else if (username.length < 1) {
       alert("이름을 작성해주세요!");
-    } else if (id.length < 1) {
+    } else if (email.length < 1) {
       alert("아이디를 작성해주세요! ");
     } else if (confirmpassword !== password) {
-      alert("엥? 비밀번호를 다시 확인해주세요!");
+      console.log("confirmpassword 틀림");
+      alert("비밀번호를 다시 확인해주세요!");
+    } else if (!email.includes("@")) {
+      alert("이메일형식으로 작성해주세요!");
     } else {
       axios({
         method: "post",
-        url: "http://localhost:3001/users",
-        data: { name: name, email: id, password: password },
+        url: "http://13.209.43.166/user/signup",
+        // url: `${process.env.REACT_APP_CAT}/user/signup`,
+        data: { username: username, email: email, password: password },
       })
         .then((response) => {
-          // Handle success.
           console.log("Well done!");
-          console.log("User profile", response.data.name, response.data.id);
+          console.log(
+            "User profile",
+            response.data.username,
+            response.data.email
+          );
           //이게 마중나오는 개념인지?????????
           // localStorage.setItem("token", response.data.jwt); //있어도 되고 없어도 되는데 리덕스를 사용하지 않으면 필수 // context.api 공부하세요
           console.log(response);
           alert("회원가입 성공! 로그인으로 이동합니다");
           navigate(`/Login`);
         })
-        .catch((error) => {
-          // Handle error.
-          console.log("An error occurred:", error);
+        .catch((ex) => {
+          if (ex.response && ex.response.status === 404) {
+            // 404 에러가 발생한 경우
+
+            console.log("또 404에러지롱.", ex);
+          } else {
+            console.log("Oops......another error occurred:", ex);
+          }
         });
+
+      // .catch((error) => {
+      //   console.log(
+      //     "OMG.....OTL.....OTZ.....sorry ..........An error occurred:",
+      //     error
+      //   );
+      // });
     }
   };
 
@@ -64,7 +83,7 @@ function Join() {
             onChange={(event) => {
               setName(event.target.value);
             }}
-            value={name}
+            value={username}
             placeholder="이름을 입력하세요."
           />
           <hr></hr>
@@ -72,9 +91,9 @@ function Join() {
           <TextField
             required
             onChange={(event) => {
-              setId(event.target.value);
+              setEmail(event.target.value);
             }}
-            value={id}
+            value={email}
             placeholder="이메일을 입력하세요."
           />
           <hr></hr>

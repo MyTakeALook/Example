@@ -68,19 +68,19 @@
   ],
   "users": [
     {
-      "name": "채정",
+      "username": "채정",
       "email": "angela",
       "password": "password",
       "id": 1
     },
     {
-      "name": "채정",
+      "username": "채정",
       "email": "chaejung",
       "password": "",
       "id": 2
     },
     {
-      "name": "정기",
+      "username": "정기",
       "email": "jungki@",
       "password": "qwerdf",
       "id": 3
