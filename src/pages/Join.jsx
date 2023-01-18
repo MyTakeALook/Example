@@ -34,7 +34,7 @@ function Join() {
     } else {
       axios({
         method: "post",
-        url: "http://13.209.43.166/user/signup",
+        url: "http://15.165.158.158/user/signup",
         // url: `${process.env.REACT_APP_CAT}/user/signup`,
         data: { username: username, email: email, password: password },
       })
