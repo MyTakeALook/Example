@@ -27,11 +27,13 @@ function Join() {
     } else if (id.length < 1) {
       alert("아이디를 작성해주세요! ");
     } else if (confirmpassword !== password) {
-      alert("엥? 비밀번호를 다시 확인해주세요!");
+      alert("비밀번호를 다시 확인해주세요!");
+    } else if (!id.includes("@")) {
+      alert("이메일형식으로 작성해주세요!");
     } else {
       axios({
         method: "post",
-        url: "http://localhost:3001/users",
+        url: `${process.env.REACT_APP_CAT}/user/signup`,
         data: { name: name, email: id, password: password },
       })
         .then((response) => {
