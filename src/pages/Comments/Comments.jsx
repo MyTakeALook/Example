@@ -24,7 +24,12 @@ const Comments = () => {
             setisShow((pre) => !pre);
           }}
         >
-          <div>{isShow ? "눌러서 댓글내리기" : "눌러서 댓글보기"}</div>
+          <StUpDown>
+            {" "}
+            {isShow
+              ? "🐾  눌러서 댓글내리기 👇  🐾"
+              : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
+          </StUpDown>
         </StToggleContainer>
         <AddComent />
         <StCommentList>
@@ -64,4 +69,16 @@ const StToggleContainer = styled.div`
 const StCommentList = styled.div`
   height: 350px;
   overflow: scroll;
+`;
+const StUpDown = styled.div`
+  background-color: #dadada;
+  width: 500px;
+  height: 40px;
+  border-radius: 30px;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  padding-top: 15px;
+  margin-bottom: 30px;
+  margin-left: 15px;
 `;
