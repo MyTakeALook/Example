@@ -7,17 +7,32 @@ import Layout from "../shared/Layout";
 const Add = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState({
-    id: 0,
-    like: "",
+    title: "",
+    imageUrl: "",
     catName: "",
     age: "",
     gender: "",
     text: "",
-    image: "",
+    love: 0,
+    visit: 0,
   });
 
+  // const setAuthorizationToken = (token) => {
+  //   if (token) {
+  //     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  //   } else {
+  //     delete axios.defaults.headers.common["Authorization"];
+  //   }
+  // };
+
   const onWriteHandler = async (cats) => {
-    await axios.post("http://localhost:3001/index", cats);
+    await axios.post(`${process.env.REACT_APP_CAT}/index/submit`, cats);
+    // .then((res) => {
+    //   const token = res.data.token;
+    //   localStorage.setItem("jwtToken", token);
+    //   setAuthorizationToken(token);
+    //   console.log(token);
+    // });
     navigate("/index");
   };
   return (
@@ -81,20 +96,20 @@ const Add = () => {
                   required
                 />
 
-                <StInput
+                {/* <StInput
                   type="text"
                   onChange={(event) => {
                     const { value } = event.target;
                     setCats({
                       ...cats,
-                      name: value,
+                      catName: value,
                     });
                   }}
                   value={cats.name}
                   placeholder="집사이름:"
                   name="name"
                   required
-                />
+                /> */}
                 <StInput type="file" />
                 <Textarea
                   name="text"

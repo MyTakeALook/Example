@@ -31,13 +31,12 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://15.165.158.158/user/login`, {
+      const response = await axios.post(`http://43.200.163.145/user/login`, {
         username: id,
         password,
       });
-
       const accessToken = response?.data?.accessToken;
-      setCookie("Authorization", accessToken);
+      localStorage.setItem("Authorization", accessToken.split(" ")[1]);
       navigate(`/Index`);
     } catch (err) {
       setErrMsg("로그인에 실패하였습니다");

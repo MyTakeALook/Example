@@ -7,16 +7,26 @@ const AddCommentForm = () => {
   // const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const { id } = useParams();
   const [comment, setComment] = useState({
-    // id: Date.now(),
     comment: "",
   });
 
-  const submitCommentHandler = async (comment) => {
-    await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, {
-      comment,
-      // id,
+  const Authorizationtest =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE0NzgwMCwiaWF0IjoxNjc0MDYxNDAwfQ.URZVNIyiIdWIvWIso_q_LszLWH1F1icSsHQY5sfKlCE";
+
+  // const submitCommentHandler = (comment) => {
+  //   fetch(`${process.env.REACT_APP_CAT}/board/${id}`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json", Authorization: Authorizationtest },
+  //     body: JSON.stringify(comment),
+  //   }).then((response) => response.json());
+  // };
+
+  const submitCommentHandler = (comment) => {
+    axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
     });
-    // return window.location.reload();
   };
 
   return (
@@ -26,20 +36,7 @@ const AddCommentForm = () => {
         submitCommentHandler(comment);
       }}
     >
-      <StNameInput>
-        {/* <input
-          placeholder="작성자"
-          type="text"
-          name="username"
-          onChange={(ev) => {
-            setComment({
-              ...comment,
-              username: ev.target.value,
-            });
-          }}
-          maxLength={5}
-        /> */}
-      </StNameInput>
+      <StNameInput></StNameInput>
       <StAddinput>
         <StInput
           placeholder="댓글을 추가하세요. (100자 이내)"

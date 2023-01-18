@@ -229,7 +229,6 @@ const StLoveVIew = styled.div`
   width: 600px;
   height: 50px;
   margin-top: 20px;
-
   display: flex;
   justify-content: space-around;
 `;
@@ -248,7 +247,6 @@ const StLove = styled.div`
 const StView = styled.div`
   margin-top: 5px;
   background-color: #ececec;
-
   border-radius: 20px;
   text-align: center;
   padding-top: 15px;
@@ -275,7 +273,6 @@ const StButton = styled.button`
   /* justify-content: space-between; */
   cursor: pointer;
   /* align-items: left; */
-
   /* font-family: "Noto Sans KR", sans-serif; */
 `;
 const StButtonDiv = styled.div`
