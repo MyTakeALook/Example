@@ -20,15 +20,15 @@ const Detail = () => {
 
   // 게시물 CRUD
   const onEditThisCat = (e) => {
-    axios.patch(`http://localhost:3001/index/${id}`, e);
+    axios.patch(`${process.env.REACT_APP_CAT}/index/${id}`, e);
     return window.location.reload();
   };
 
   const onDeletThisCat = () => {
     const result = window.confirm("주인님을 지울까요?");
     if (result) {
-      axios.delete(`http://localhost:3001/index/${id}`);
-      return navigate("/");
+      axios.delete(`${process.env.REACT_APP_CAT}/index/detail/${id}`);
+      return navigate("/Index");
     } else {
       return;
     }
@@ -37,10 +37,10 @@ const Detail = () => {
   useEffect(() => {
     //고양이 상세설명 GET
     axios
-      .get(`http://localhost:3001/index`)
+      .get(`${process.env.REACT_APP_CAT}/index/boardList`)
       .then((response) => {
         response.data.filter((list) => {
-          if (list.id === Number(id)) {
+          if (list.boardId === Number(id)) {
             setMycat(list);
           }
           return null;
@@ -80,7 +80,7 @@ const Detail = () => {
               <button
                 size="large"
                 onClick={() => {
-                  onDeletThisCat(id);
+                  onDeletThisCat();
                 }}
               >
                 글 삭제

@@ -11,7 +11,7 @@ const Comments = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/comments?listid=${id}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_CAT}/board/${id}`).then((res) => {
       setMycomment(res.data);
     });
   }, []);
@@ -29,7 +29,11 @@ const Comments = () => {
         <AddComent />
         <StCommentList>
           {mycomment?.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+            <Comment
+              key={comment.commentId}
+              commentId={comment.commentId}
+              comment={comment}
+            />
           ))}
         </StCommentList>
       </StContainer>

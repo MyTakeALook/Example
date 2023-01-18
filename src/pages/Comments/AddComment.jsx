@@ -4,16 +4,19 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const AddCommentForm = () => {
+  // const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const { id } = useParams();
   const [comment, setComment] = useState({
-    username: "",
+    // id: Date.now(),
     comment: "",
-    listid: id,
   });
 
   const submitCommentHandler = async (comment) => {
-    await axios.post(`http://localhost:3001/comments`, comment);
-    return window.location.reload();
+    await axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, {
+      comment,
+      // id,
+    });
+    // return window.location.reload();
   };
 
   return (
@@ -24,7 +27,7 @@ const AddCommentForm = () => {
       }}
     >
       <StNameInput>
-        <input
+        {/* <input
           placeholder="작성자"
           type="text"
           name="username"
@@ -35,7 +38,7 @@ const AddCommentForm = () => {
             });
           }}
           maxLength={5}
-        />
+        /> */}
       </StNameInput>
       <input
         placeholder="댓글을 추가하세요. (100자 이내)"

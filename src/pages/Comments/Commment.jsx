@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const Comment = ({ comment }) => {
+const Comment = ({ commentId, comment }) => {
   const [isCommentEditMode, setIsCommentEditMode] = useState(false);
   const [editcomment, setEditcomment] = useState({
     comment: "",
@@ -12,7 +12,9 @@ const Comment = ({ comment }) => {
   const onDeleteComment = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(`http://localhost:3001/comments/${id}`);
+      await axios.delete(
+        `${process.env.REACT_APP_CAT}/board/${commentId}/${id}`
+      );
       return window.location.reload();
     } else {
       return;
@@ -21,7 +23,7 @@ const Comment = ({ comment }) => {
 
   const onEditComment = async (e) => {
     console.log(e);
-    await axios.patch(`http://localhost:3001/comments/${e.id}`, e);
+    await axios.patch(`${process.env.REACT_APP_CAT}/comments/${e.id}`, e);
     // return window.location.reload();
   };
 

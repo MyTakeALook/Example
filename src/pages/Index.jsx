@@ -11,14 +11,16 @@ const Index = () => {
   const [cats, setCats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index`);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_CAT}/index/boardList`
+    );
     setCats(data);
   };
 
-  const onClickDeleteCats = async (Id) => {
+  const onClickDeleteCats = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(`http://localhost:3001/Index/${Id}`);
+      await axios.delete(`${process.env.REACT_APP_CAT}/index/boardList/${id}`);
       return window.location.reload();
     } else {
       return;
@@ -60,12 +62,12 @@ const Index = () => {
         <Listt>
           {cats?.map((cat) => {
             return (
-              <StOneCatBox key={cat.id}>
+              <StOneCatBox key={cat.boardId}>
                 <div
                   onClick={() => {
-                    navigate(`/Detail/${cat.id}`);
+                    navigate(`/Detail/${cat.boardId}`);
                   }}
-                  key={cat.id}
+                  key={cat.boardId}
                 >
                   디테일(사진들어갈예정)
                 </div>
@@ -83,13 +85,13 @@ const Index = () => {
                       <button
                         type="button"
                         onClick={() => {
-                          onClickDeleteCats(cat.id);
+                          onClickDeleteCats(cat.boardId);
                         }}
                       >
                         삭제하기
                       </button>
                     </div>
-                    <Love key={cat.id} cat={cat} />
+                    <Love key={cat.boardId} cat={cat} />
                   </StOneCat>
                 </div>
               </StOneCatBox>

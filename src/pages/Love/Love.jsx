@@ -7,7 +7,9 @@ const Love = ({ cat }) => {
   const [isLove, setIsLove] = useState(false);
 
   const onEditLove = async () => {
-    await axios.patch(`http://localhost:3001/index/${cat.id}`, { love: love });
+    await axios.patch(`${process.env.REACT_APP_CAT}/index/${cat.id}`, {
+      love: love,
+    });
   };
 
   return (
