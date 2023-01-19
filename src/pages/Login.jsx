@@ -88,7 +88,9 @@ function Login() {
           >
             login
           </StButton>
-          <Link to={"/Join"}>허걱! 아직 회원이 아니신가요? 회원가입하러가기! </Link>
+          <Link to={"/Join"}>
+            허걱! 아직 회원이 아니신가요? 회원가입하러가기!{" "}
+          </Link>
         </Stdiv2>
       </Stloginbox>
     </>
