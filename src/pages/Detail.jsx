@@ -19,7 +19,7 @@ const Detail = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
 
   // 게시물 CRUD
   const onEditThisCat = (e) => {
@@ -63,7 +63,7 @@ const Detail = () => {
 
   return (
     <>
-      <img src="img/main1.png" alt="logo" />
+      <img src={process.env.PUBLIC_URL + "/img/main1.png"} alt="logo" />
 
       <StDetailALl>
         {!isEditMode && (
@@ -71,13 +71,19 @@ const Detail = () => {
             <StPicwithDesc>
               <StCatPic>그림</StCatPic>
               <StDecsBox>
-                {mycat.catName}
-                <br />
-                {mycat.age}
-                <br />
-                {mycat.gender}
-                <br />
-                {mycat.text}
+                <StDescDIv>
+                  <h3>{mycat.catName}</h3>
+                  <br />
+
+                  <StDesc>주인님 나이: </StDesc>
+                  {mycat.age}
+                  <hr />
+
+                  <StDesc>주인님 성별: </StDesc>
+                  {mycat.gender}
+                  <hr />
+                  {mycat.text}
+                </StDescDIv>
               </StDecsBox>
             </StPicwithDesc>
             <StButtonDiv>
@@ -187,7 +193,7 @@ const Detail = () => {
           </StDetailBox>
         )}
       </StDetailALl>
-      <Comments />
+      {!isEditMode && <Comments />}
     </>
   );
 };
@@ -200,6 +206,7 @@ const StDetailALl = styled.div`
   //아래로 정열
   flex-direction: column;
   //가운데 배열
+
   align-items: center;
 `;
 
@@ -327,4 +334,13 @@ const StDescInput = styled.input`
   border: none;
   padding: 5px;
   margin-top: 15px;
+`;
+const StDesc = styled.div`
+  color: gray;
+`;
+const StDescDIv = styled.div`
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 `;

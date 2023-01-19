@@ -7,7 +7,7 @@ import Layout from "../shared/Layout";
 import Love from "./Love/Love";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIwMzU5OSwiaWF0IjoxNjc0MTE3MTk5fQ.NOLMECrRn6irQWOykSYR-Bup1YJa5cE4roJYwretDU4";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ const Index = () => {
         Authorization: Authorizationtest,
       },
     });
-
     setCats(data);
   };
 
@@ -127,7 +126,7 @@ const StOneCatBox = styled.div`
 const StOneCat = styled.div``;
 
 const Header = styled.div`
-  margin-top: 150px;
+  margin-top: 80px;
   height: 60px;
   display: flex;
   justify-content: space-between;
