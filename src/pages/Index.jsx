@@ -6,21 +6,31 @@ import axios from "axios";
 import Layout from "../shared/Layout";
 import Love from "./Love/Love";
 
+const Authorizationtest =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+
 const Index = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_CAT}/index/boardList`
-    );
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
+
     setCats(data);
   };
 
   const onClickDeleteCats = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(`${process.env.REACT_APP_CAT}/index/boardList/${id}`);
+      await axios.delete(`${process.env.REACT_APP_CAT}/index/detail/${id}`, {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      });
       return window.location.reload();
     } else {
       return;

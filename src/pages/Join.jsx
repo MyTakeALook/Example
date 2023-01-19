@@ -34,17 +34,13 @@ function Join() {
     } else {
       axios({
         method: "post",
-        url: "http://15.165.158.158/user/signup",
+        url: "http://43.200.163.145/user/signup",
         // url: `${process.env.REACT_APP_CAT}/user/signup`,
         data: { username: username, email: email, password: password },
       })
         .then((response) => {
           console.log("Well done!");
-          console.log(
-            "User profile",
-            response.data.username,
-            response.data.email
-          );
+          console.log("User profile", response.data.username, response.data.email);
           //이게 마중나오는 개념인지?????????
           // localStorage.setItem("token", response.data.jwt); //있어도 되고 없어도 되는데 리덕스를 사용하지 않으면 필수 // context.api 공부하세요
           console.log(response);

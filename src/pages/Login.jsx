@@ -8,10 +8,10 @@ import { TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 // import AuthContext from "./context/AuthProvider";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 function Login() {
-  const [cookies, setCookie] = useCookies(["쿠키 이름"]);
+  // const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -88,9 +88,7 @@ function Login() {
           >
             login
           </StButton>
-          <Link to={"/Join"}>
-            허걱! 아직 회원이 아니신가요? 회원가입하러가기!{" "}
-          </Link>
+          <Link to={"/Join"}>허걱! 아직 회원이 아니신가요? 회원가입하러가기! </Link>
         </Stdiv2>
       </Stloginbox>
     </>

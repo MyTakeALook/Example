@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Layout from "../shared/Layout";
+// import {Authorizationtest} from "../shared/api"
 
 const Add = () => {
   const navigate = useNavigate();
@@ -17,22 +18,15 @@ const Add = () => {
     visit: 0,
   });
 
-  // const setAuthorizationToken = (token) => {
-  //   if (token) {
-  //     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  //   } else {
-  //     delete axios.defaults.headers.common["Authorization"];
-  //   }
-  // };
+  const Authorizationtest =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
 
   const onWriteHandler = async (cats) => {
-    await axios.post(`${process.env.REACT_APP_CAT}/index/submit`, cats);
-    // .then((res) => {
-    //   const token = res.data.token;
-    //   localStorage.setItem("jwtToken", token);
-    //   setAuthorizationToken(token);
-    //   console.log(token);
-    // });
+    await axios.post(`${process.env.REACT_APP_CAT}/index/submit`, cats, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
     navigate("/index");
   };
   return (

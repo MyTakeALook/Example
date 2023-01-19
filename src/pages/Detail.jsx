@@ -18,10 +18,13 @@ const Detail = () => {
     text: "",
   });
 
+  const Authorizationtest =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+
   // 게시물 CRUD
   const onEditThisCat = (e) => {
-    axios.patch(`${process.env.REACT_APP_CAT}/index/${id}`, e);
-    return window.location.reload();
+    axios.patch(`${process.env.REACT_APP_CAT}/index/detail/${id}`, e);
+    // return window.location.reload();
   };
 
   const onDeletThisCat = () => {
@@ -36,19 +39,26 @@ const Detail = () => {
 
   useEffect(() => {
     //고양이 상세설명 GET
-    axios
-      .get(`${process.env.REACT_APP_CAT}/index/boardList`)
-      .then((response) => {
-        response.data.filter((list) => {
-          if (list.boardId === Number(id)) {
-            setMycat(list);
-          }
-          return null;
-        });
+    const data = axios
+      .get(`${process.env.REACT_APP_CAT}/index/detail/${id}`, {
+        headers: {
+          Authorization: Authorizationtest,
+        },
       })
-      .catch(function (error) {
-        console.log(error);
+      .then((appData) => {
+        console.log(appData.data);
+        setMycat(appData.data);
       });
+    //
+
+    console.log("이값이 들어갑니다 : ", mycat);
+    //     }
+    //     return null;
+    //   });
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }, []);
 
   return (
@@ -90,7 +100,7 @@ const Detail = () => {
             </StButtonDiv>
             <StLoveVIew>
               <StLove>💜 {mycat.love}</StLove>
-              <StView>뷰 들어가는데</StView>
+              <StView>{mycat.visit}</StView>
             </StLoveVIew>
           </StDetailBox>
         )}
@@ -213,7 +223,6 @@ const StDecs2Box = styled.div`
   margin: auto;
   margin-left: 10px;
   display: flex;
-
   align-items: center;
   background-color: #ececec;
   border-radius: 15px;
@@ -282,7 +291,6 @@ const StButton = styled.button`
   /* justify-content: space-between; */
   cursor: pointer;
   /* align-items: left; */
-
   /* font-family: "Noto Sans KR", sans-serif; */
 `;
 const StButtonDiv1 = styled.div`

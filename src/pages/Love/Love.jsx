@@ -2,50 +2,40 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const Love = ({ cat }) => {
-  const [love, setLove] = useState(cat.love);
-  const [isLove, setIsLove] = useState(false);
+const Authorizationtest =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
 
+const Love = ({ cat }) => {
   const onEditLove = async () => {
-    await axios.patch(`${process.env.REACT_APP_CAT}/index/${cat.id}`, {
-      love: love,
+    await axios.post(`${process.env.REACT_APP_CAT}/board/love/${cat.boardId}`, cat.boardId, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
     });
   };
 
   return (
     <>
-      {isLove ? (
+      {cat.islove ? (
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onEditLove(love);
+            onEditLove();
           }}
         >
-          <button
-            type="submit"
-            onClick={() => {
-              setIsLove(false);
-              setLove(love - 1);
-            }}
-          >
-            💜 {love}
+          <button type="submit" onClick={() => {}}>
+            💜 {cat.love}
           </button>
         </form>
       ) : (
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onEditLove(love);
+            onEditLove();
           }}
         >
-          <button
-            type="submit"
-            onClick={() => {
-              setIsLove(true);
-              setLove(love + 1);
-            }}
-          >
-            🤍 {love}
+          <button type="submit" onClick={() => {}}>
+            🤍 {cat.love}
           </button>
         </form>
       )}
