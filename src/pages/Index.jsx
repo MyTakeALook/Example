@@ -120,7 +120,7 @@ const Header = styled.div`
 `;
 
 const Btn = styled.div`
-  width: 150px;
+  width: 170px;
   background-color: #343434;
   border: none;
   color: white;
