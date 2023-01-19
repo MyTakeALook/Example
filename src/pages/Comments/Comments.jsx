@@ -12,9 +12,11 @@ const Comments = () => {
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_CAT}/board/${id}`).then((res) => {
+      console.log(mycomment);
       setMycomment(res.data);
     });
   }, []);
+
   return (
     <>
       <StContainer isShow={isShow}>
@@ -26,19 +28,13 @@ const Comments = () => {
           >
             <StUpDown>
               {" "}
-              {isShow
-                ? "🐾  눌러서 댓글내리기 👇  🐾"
-                : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
+              {isShow ? "🐾  눌러서 댓글내리기 👇  🐾" : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
             </StUpDown>
           </StToggleContainer>
           <AddComent />
           <StCommentList>
             {mycomment?.map((comment) => (
-              <Comment
-                key={comment.commentId}
-                commentId={comment.commentId}
-                comment={comment}
-              />
+              <Comment key={comment.commentId} boardId={id} comment={comment} />
             ))}
           </StCommentList>
         </StCenter>

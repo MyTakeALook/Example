@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Layout from "../shared/Layout";
 import Love from "./Love/Love";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
 
 const Index = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get(`http://43.200.163.145/index/boardList`, {
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
       headers: {
         Authorization: Authorizationtest,
       },
     });
+
     setCats(data);
   };
 

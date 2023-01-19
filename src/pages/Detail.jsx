@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Layout from "../shared/Layout";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Comments from "./Comments/Comments";
@@ -19,18 +18,25 @@ const Detail = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIyNzMwNSwiaWF0IjoxNjc0MTQwOTA1fQ.eBztfcV6yCcea-FTGXZqLMIGSVnljxJUx3tGMY3st-Y";
 
   // 게시물 CRUD
   const onEditThisCat = (e) => {
-    axios.patch(`${process.env.REACT_APP_CAT}/index/detail/${id}`, e);
-    // return window.location.reload();
+    axios.patch(`${process.env.REACT_APP_CAT}/index/detail/${id}`, e, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
   };
 
   const onDeletThisCat = () => {
     const result = window.confirm("주인님을 지울까요?");
     if (result) {
-      axios.delete(`${process.env.REACT_APP_CAT}/index/detail/${id}`);
+      axios.delete(`${process.env.REACT_APP_CAT}/index/detail/${id}`, {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      });
       return navigate("/Index");
     } else {
       return;
@@ -38,28 +44,16 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    //고양이 상세설명 GET
-    const data = axios
+    axios
       .get(`${process.env.REACT_APP_CAT}/index/detail/${id}`, {
         headers: {
           Authorization: Authorizationtest,
         },
       })
       .then((appData) => {
-        console.log(appData.data);
         setMycat(appData.data);
-      });
-    //
-
-    console.log("이값이 들어갑니다 : ", mycat);
-    //     }
-    //     return null;
-    //   });
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-  }, []);
+      }, []);
+  }, [id]);
 
   return (
     <>
@@ -206,7 +200,6 @@ const StDetailALl = styled.div`
   //아래로 정열
   flex-direction: column;
   //가운데 배열
-
   align-items: center;
 `;
 

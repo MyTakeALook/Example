@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const Comment = ({ commentId, comment }) => {
+const Authorizationtest =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIyNzMwNSwiaWF0IjoxNjc0MTQwOTA1fQ.eBztfcV6yCcea-FTGXZqLMIGSVnljxJUx3tGMY3st-Y";
+
+const Comment = ({ boardId, comment }) => {
+  // console.log("commentId :", commentId);
+  console.log("comment :", comment.commentId);
+  console.log("boardId :", boardId);
   const [isCommentEditMode, setIsCommentEditMode] = useState(false);
   const [editcomment, setEditcomment] = useState({
     comment: "",
-    id: "",
   });
 
   const onDeleteComment = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(
-        `${process.env.REACT_APP_CAT}/board/${commentId}/${id}`
-      );
+      await axios.delete(`${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`, {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      });
       return window.location.reload();
     } else {
       return;
@@ -22,11 +29,12 @@ const Comment = ({ commentId, comment }) => {
   };
 
   const onEditComment = async (e) => {
-    console.log(e);
-    await axios.patch(`${process.env.REACT_APP_CAT}/${e.id}`, e);
-    // return window.location.reload();
+    await axios.patch(`${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`, e, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
   };
-
   return (
     <>
       {!isCommentEditMode ? (
@@ -63,7 +71,6 @@ const Comment = ({ commentId, comment }) => {
               setEditcomment({
                 ...editcomment,
                 comment: ev.target.value,
-                id: comment.id,
               });
             }}
           />

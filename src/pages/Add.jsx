@@ -19,7 +19,7 @@ const Add = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
 
   const onWriteHandler = async (cats) => {
     await axios.post(`${process.env.REACT_APP_CAT}/index/submit`, cats, {
@@ -29,6 +29,7 @@ const Add = () => {
     });
     navigate("/index");
   };
+
   return (
     <StCenter>
       <Layout>
