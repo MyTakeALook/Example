@@ -16,31 +16,37 @@ const Comments = () => {
     });
   }, []);
   return (
-    <StCommentAll>
+    <>
       <StContainer isShow={isShow}>
-        <StToggleContainer
-          onClick={() => {
-            setisShow((pre) => !pre);
-          }}
-        >
-          <StUpDown>
-            {" "}
-            {isShow ? "🐾  눌러서 댓글내리기 👇  🐾" : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
-          </StUpDown>
-        </StToggleContainer>
-        <AddComent />
-        <StCommentList>
-          {mycomment?.map((comment) => (
-            <Comment key={comment.commentId} commentId={comment.commentId} comment={comment} />
-          ))}
-        </StCommentList>
+        <StCenter>
+          <StToggleContainer
+            onClick={() => {
+              setisShow((pre) => !pre);
+            }}
+          >
+            <StUpDown>
+              {" "}
+              {isShow
+                ? "🐾  눌러서 댓글내리기 👇  🐾"
+                : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
+            </StUpDown>
+          </StToggleContainer>
+          <AddComent />
+          <StCommentList>
+            {mycomment?.map((comment) => (
+              <Comment
+                key={comment.commentId}
+                commentId={comment.commentId}
+                comment={comment}
+              />
+            ))}
+          </StCommentList>
+        </StCenter>
       </StContainer>
-    </StCommentAll>
+    </>
   );
 };
 export default Comments;
-
-const StCommentAll = styled.div``;
 
 ///댓글 기능
 const StContainer = styled.div`
@@ -49,8 +55,11 @@ const StContainer = styled.div`
   bottom: 0px;
   left: 0px;
   width: 100%;
-  background-color: #fff;
+  background-color: #f8f8f8;
   transition: height 400ms ease-in-out;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 `;
 
 const StToggleContainer = styled.div`
@@ -60,7 +69,7 @@ const StToggleContainer = styled.div`
 `;
 
 const StCommentList = styled.div`
-  height: 350px;
+  /* height: 350px; */
   overflow: scroll;
 `;
 const StUpDown = styled.div`
@@ -68,10 +77,17 @@ const StUpDown = styled.div`
   width: 500px;
   height: 40px;
   border-radius: 30px;
+  align-items: center;
   text-align: center;
   color: black;
   font-weight: bold;
   padding-top: 15px;
   margin-bottom: 30px;
   margin-left: 15px;
+`;
+const StCenter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

@@ -36,8 +36,7 @@ const AddCommentForm = () => {
         submitCommentHandler(comment);
       }}
     >
-      <StNameInput></StNameInput>
-      <StAddinput>
+      <StIncludeBtnandInput>
         <StInput
           placeholder="댓글을 추가하세요. (100자 이내)"
           name="content"
@@ -51,27 +50,26 @@ const AddCommentForm = () => {
           maxLength={100}
         />
         <StButton type="submit">추가하기</StButton>
-      </StAddinput>
+      </StIncludeBtnandInput>
     </StForm>
   );
 };
 
 export default AddCommentForm;
 
-const StNameInput = styled.div`
-  width: 150px;
-`;
-
 const StForm = styled.form`
   gap: 12px;
   width: 100%;
-  padding: 0 12px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
-const StAddinput = styled.div`
-  margin: 40px auto auto 30px;
-`;
+
 const StInput = styled.input`
-  width: 400px;
+  width: 350px;
   height: 40px;
   border-radius: 20px;
   border: solid white 1px;
@@ -79,7 +77,7 @@ const StInput = styled.input`
   padding-left: 10px;
 `;
 const StButton = styled.button`
-  margin: -40px auto auto 420px;
+  /* margin: -40px auto auto 420px; */
   background-color: black;
   text-align: center;
   width: 70px;
@@ -94,5 +92,16 @@ const StButton = styled.button`
   font-size: 13px;
   color: white;
   cursor: pointer;
+  /* justify-content: center; */
+  align-items: center;
+  text-align: center;
   /* font-family: "Noto Sans KR", sans-serif; */
+`;
+const StIncludeBtnandInput = styled.div`
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 50px auto auto auto;
 `;

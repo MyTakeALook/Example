@@ -96,7 +96,7 @@ const Detail = () => {
         )}
         {isEditMode && (
           <StDetailBox>
-            <StDecsBox>
+            <StDecs2Box>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -104,8 +104,9 @@ const Detail = () => {
                   setIsEditMode(false);
                 }}
               >
-                이름 :{" "}
-                <input
+                <h3>🐾 게시글 수정하기 🐾</h3>
+                이름 :
+                <StInput
                   required
                   type="text"
                   placeholder={mycat.catName}
@@ -118,7 +119,7 @@ const Detail = () => {
                 />
                 <br />
                 나이 :{" "}
-                <input
+                <StInput
                   required
                   type="number"
                   min="1"
@@ -132,7 +133,7 @@ const Detail = () => {
                 />
                 <br />
                 성별 :{" "}
-                <input
+                <StInput
                   required
                   type="text"
                   placeholder={mycat.gender}
@@ -143,9 +144,10 @@ const Detail = () => {
                     });
                   }}
                 />
+                <input type="file" />
                 <br />
                 설명 :{" "}
-                <input
+                <StDescInput
                   required
                   type="text"
                   placeholder={mycat.text}
@@ -156,18 +158,22 @@ const Detail = () => {
                     });
                   }}
                 />
-                <br />
-                <button size="large">저장</button>
+                <br />{" "}
+                <StButtonDiv1>
+                  <StButton type="submit " size="large">
+                    저장
+                  </StButton>
+                  <StButton
+                    size="large"
+                    onClick={() => {
+                      setIsEditMode(false);
+                    }}
+                  >
+                    뒤로
+                  </StButton>
+                </StButtonDiv1>
               </form>
-              <button
-                size="large"
-                onClick={() => {
-                  setIsEditMode(false);
-                }}
-              >
-                뒤로
-              </button>
-            </StDecsBox>
+            </StDecs2Box>
           </StDetailBox>
         )}
       </StDetailALl>
@@ -177,9 +183,9 @@ const Detail = () => {
 };
 
 export default Detail;
-
 const StDetailALl = styled.div`
   margin-top: 20px;
+  text-align: center;
   display: flex;
   //아래로 정열
   flex-direction: column;
@@ -196,15 +202,23 @@ const StDetailBox = styled.div`
 `;
 
 const StCatPic = styled.div`
-  /* border: 3px solid black; */
   width: 300px;
   height: 300px;
   margin: auto;
   margin-left: 10px;
 `;
+const StDecs2Box = styled.div`
+  width: 600px;
+  height: 700px;
+  margin: auto;
+  margin-left: 10px;
+  display: flex;
 
+  align-items: center;
+  background-color: #ececec;
+  border-radius: 15px;
+`;
 const StDecsBox = styled.div`
-  /* border: 3px solid black; */
   border-left: solid #dadada 1px;
   width: 300px;
   height: 300px;
@@ -222,10 +236,8 @@ const StPicwithDesc = styled.div`
 `;
 
 const StLoveVIew = styled.div`
-  /* border: 3px solid black; */
   border-radius: 20px;
   padding: 20px;
-  /* background-color: brown; */
   width: 600px;
   height: 50px;
   margin-top: 20px;
@@ -239,7 +251,6 @@ const StLove = styled.div`
   border-radius: 20px;
   text-align: center;
   padding-top: 15px;
-  /* border: 1px solid yellowgreen; */
   width: 200px;
   height: 40px;
 `;
@@ -250,12 +261,10 @@ const StView = styled.div`
   border-radius: 20px;
   text-align: center;
   padding-top: 15px;
-  /* border: 1px solid yellowgreen; */
   width: 200px;
   height: 40px;
 `;
 const StButton = styled.button`
-  /* margin: -40px auto auto 420px; */
   margin: 10px auto auto 10px;
   background-color: black;
   text-align: center;
@@ -273,10 +282,41 @@ const StButton = styled.button`
   /* justify-content: space-between; */
   cursor: pointer;
   /* align-items: left; */
+
   /* font-family: "Noto Sans KR", sans-serif; */
 `;
-const StButtonDiv = styled.div`
+const StButtonDiv1 = styled.div`
+  justify-content: center;
   display: flex;
   flex-direction: row;
-  align-items: left;
+  justify-content: center;
+  align-items: center;
+  margin-left: 170px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
+const StButtonDiv = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
+const StInput = styled.input`
+  width: 300px;
+  height: 20px;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+const StDescInput = styled.input`
+  width: 300px;
+  height: 400px;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
+  margin-top: 15px;
 `;

@@ -13,7 +13,7 @@ const HeaderStyles = {
   color: "white",
   fontWeight: "600",
   fontSize: "60px",
-  margin: "120px 0 0 30px",
+  margin: "120px 0 0 -50px",
 };
 const FooterStyles = {
   width: "100%",
