@@ -49,7 +49,7 @@ function Login() {
       <Stloginbox>
         <StLogin> Log in 🐾(ฅ•.•ฅ) </StLogin>
         <StDiv onSubmit={handleSubmit}>
-          Email:
+          User name:
           <hr />
           <TextField
             required
@@ -59,7 +59,7 @@ function Login() {
             id="id"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            label="이메일을 입력해주세요."
+            label="사용자명을 입력해주세요."
           />
           <hr />
           Password:
