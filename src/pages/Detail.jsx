@@ -159,7 +159,7 @@ const Detail = () => {
                   }}
                 />
                 <br />{" "}
-                <StButtonDiv>
+                <StButtonDiv1>
                   <StButton type="submit " size="large">
                     저장
                   </StButton>
@@ -171,7 +171,7 @@ const Detail = () => {
                   >
                     뒤로
                   </StButton>
-                </StButtonDiv>
+                </StButtonDiv1>
               </form>
             </StDecs2Box>
           </StDetailBox>
@@ -285,7 +285,7 @@ const StButton = styled.button`
 
   /* font-family: "Noto Sans KR", sans-serif; */
 `;
-const StButtonDiv = styled.div`
+const StButtonDiv1 = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: row;
@@ -294,6 +294,14 @@ const StButtonDiv = styled.div`
   margin-left: 170px;
   margin-top: 10px;
   margin-bottom: 20px;
+`;
+const StButtonDiv = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 `;
 const StInput = styled.input`
   width: 300px;
