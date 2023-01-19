@@ -36,26 +36,26 @@ const Index = () => {
       <Layout>
         <div>
           <Header>
-            <Btn
+            {/* <Btn
               onClick={() => {
                 navigate("/Index");
               }}
             >
               🐰홈이냥
-            </Btn>
+            </Btn> */}
             <Btn
               onClick={() => {
                 navigate("/");
               }}
             >
-              🐾아웃이냥
+              로그아웃
             </Btn>
             <Btn
               onClick={() => {
                 navigate("/Add");
               }}
             >
-              🐾냥추
+              고양이 소개 추가하기
             </Btn>
           </Header>
         </div>
@@ -120,13 +120,22 @@ const Header = styled.div`
 `;
 
 const Btn = styled.div`
-  width: 200px;
-  border: 4px solid gray;
+  width: 150px;
+  background-color: #343434;
+  border: none;
+  color: white;
   align-items: center;
   min-height: 10px;
-  border-radius: 12px;
-  padding: 12px 24px 24px 24px;
+  border-radius: 25px;
+  padding: 15px;
   margin: auto;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
 `;
 
 const Listt = styled.div`
