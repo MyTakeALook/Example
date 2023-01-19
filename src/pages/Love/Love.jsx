@@ -3,15 +3,19 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIwMzU5OSwiaWF0IjoxNjc0MTE3MTk5fQ.NOLMECrRn6irQWOykSYR-Bup1YJa5cE4roJYwretDU4";
 
 const Love = ({ cat }) => {
   const onEditLove = async () => {
-    await axios.post(`${process.env.REACT_APP_CAT}/board/love/${cat.boardId}`, cat.boardId, {
-      headers: {
-        Authorization: Authorizationtest,
-      },
-    });
+    await axios.post(
+      `http://43.200.163.145/board/love/${cat.boardId}`,
+      cat.boardId,
+      {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      }
+    );
   };
 
   return (
@@ -23,9 +27,9 @@ const Love = ({ cat }) => {
             onEditLove();
           }}
         >
-          <button type="submit" onClick={() => {}}>
+          <StButton type="submit" onClick={() => {}}>
             💜 {cat.love}
-          </button>
+          </StButton>
         </form>
       ) : (
         <form
@@ -34,12 +38,33 @@ const Love = ({ cat }) => {
             onEditLove();
           }}
         >
-          <button type="submit" onClick={() => {}}>
+          <StButton type="submit" onClick={() => {}}>
             🤍 {cat.love}
-          </button>
+          </StButton>
         </form>
       )}
     </>
   );
 };
 export default Love;
+
+const StButton = styled.button`
+  margin: auto;
+  background-color: black;
+  margin-top: 10px;
+  text-align: center;
+  width: 70px;
+  height: 30px;
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid black;
+  font-weight: bold;
+  font-size: 10px;
+  color: white;
+  cursor: pointer;
+  /* font-family: "Noto Sans KR", sans-serif; */
+`;

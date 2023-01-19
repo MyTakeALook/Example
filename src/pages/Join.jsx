@@ -40,7 +40,11 @@ function Join() {
       })
         .then((response) => {
           console.log("Well done!");
-          console.log("User profile", response.data.username, response.data.email);
+          console.log(
+            "User profile",
+            response.data.username,
+            response.data.email
+          );
           //이게 마중나오는 개념인지?????????
           // localStorage.setItem("token", response.data.jwt); //있어도 되고 없어도 되는데 리덕스를 사용하지 않으면 필수 // context.api 공부하세요
           console.log(response);

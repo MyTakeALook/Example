@@ -26,13 +26,19 @@ const Comments = () => {
           >
             <StUpDown>
               {" "}
-              {isShow ? "🐾  눌러서 댓글내리기 👇  🐾" : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
+              {isShow
+                ? "🐾  눌러서 댓글내리기 👇  🐾"
+                : "🐾  눌러서 댓글보기 ☝🏻 🐾"}
             </StUpDown>
           </StToggleContainer>
           <AddComent />
           <StCommentList>
             {mycomment?.map((comment) => (
-              <Comment key={comment.commentId} commentId={comment.commentId} comment={comment} />
+              <Comment
+                key={comment.commentId}
+                commentId={comment.commentId}
+                comment={comment}
+              />
             ))}
           </StCommentList>
         </StCenter>

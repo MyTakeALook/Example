@@ -11,7 +11,7 @@ const AddCommentForm = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE0NzgwMCwiaWF0IjoxNjc0MDYxNDAwfQ.URZVNIyiIdWIvWIso_q_LszLWH1F1icSsHQY5sfKlCE";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIxNzk0MCwiaWF0IjoxNjc0MTMxNTQwfQ.U5xbGtKg3e6Dt76JyWHho80UAgm_rlGL-p8jN0DbVeo";
 
   // const submitCommentHandler = (comment) => {
   //   fetch(`${process.env.REACT_APP_CAT}/board/${id}`, {
@@ -22,7 +22,7 @@ const AddCommentForm = () => {
   // };
 
   const submitCommentHandler = (comment) => {
-    axios.post(`${process.env.REACT_APP_CAT}/board/${id}`, comment, {
+    axios.post(`http://43.200.163.145/board/${id}`, comment, {
       headers: {
         Authorization: Authorizationtest,
       },
