@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIyNzMwNSwiaWF0IjoxNjc0MTQwOTA1fQ.eBztfcV6yCcea-FTGXZqLMIGSVnljxJUx3tGMY3st-Y";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI2ODY4MSwiaWF0IjoxNjc0MTgyMjgxfQ.NYrEYGY_GFIR5iRPGesnDpFtL_FXGCiJXgAccnDC8Hc";
 
 const Comment = ({ boardId, comment }) => {
   // console.log("commentId :", commentId);
@@ -17,11 +17,14 @@ const Comment = ({ boardId, comment }) => {
   const onDeleteComment = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(`${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`, {
-        headers: {
-          Authorization: Authorizationtest,
-        },
-      });
+      await axios.delete(
+        `http://43.200.163.145/board/${boardId}/${comment.commentId}`,
+        {
+          headers: {
+            Authorization: Authorizationtest,
+          },
+        }
+      );
       return window.location.reload();
     } else {
       return;
@@ -29,11 +32,15 @@ const Comment = ({ boardId, comment }) => {
   };
 
   const onEditComment = async (e) => {
-    await axios.patch(`${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`, e, {
-      headers: {
-        Authorization: Authorizationtest,
-      },
-    });
+    await axios.patch(
+      `${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`,
+      e,
+      {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      }
+    );
   };
   return (
     <>
@@ -63,8 +70,8 @@ const Comment = ({ boardId, comment }) => {
           </StButtons>
         </StCommentBox>
       ) : (
-        <form>
-          <input
+        <StEditCommentForm>
+          <StcommentEditInput
             required
             type="text"
             onChange={(ev) => {
@@ -75,15 +82,28 @@ const Comment = ({ boardId, comment }) => {
             }}
           />
           <StEditDoneButton onClick={() => onEditComment(editcomment)}>
-            댓글 수정 완료
+            수정 완료
           </StEditDoneButton>
-        </form>
+        </StEditCommentForm>
       )}
     </>
   );
 };
 
 export default Comment;
+
+const StcommentEditInput = styled.input`
+  background-color: #dadada;
+  border: none;
+  border-radius: 15px;
+  height: 25px;
+  width: 250px;
+  margin-top: 10px;
+`;
+const StEditCommentForm = styled.form`
+  display: flex;
+  flex-direction: row;
+`;
 
 const StCommentBox = styled.div`
   margin: 10px 0 0;
@@ -119,9 +139,10 @@ const StButton = styled.button`
 const StEditDoneButton = styled.button`
   /* margin: auto; */
   background-color: black;
-  margin-top: 3px;
+  margin-top: 10px;
+  margin-left: 10px;
   text-align: center;
-  width: 80px;
+  width: 70px;
   height: 30px;
   opacity: 0.9;
   display: flex;
