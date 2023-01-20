@@ -5,14 +5,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Layout from "../shared/Layout";
 import Love from "./Love/Love";
+import Rank from "./Rank/Rank";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirgiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI5NDgwMiwiaWF0IjoxNjc0MjA4NDAyfQ.pUZUgtKQisgIvH8YnkDnXqxU0C_oImZpb6f0qwXBxGA";
 
 const Index = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
   const [rankcats, setRankcats] = useState([]);
+
+  function moveToChatroomHandler() {
+    window.location.href = "http://43.200.163.145/chatroom";
+  }
 
   const fetchCat = async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
@@ -21,16 +26,12 @@ const Index = () => {
       },
     });
     setCats(data);
-  };
-
-  const fetchRank = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/rankBoard`, {
+    const { datas } = await axios.get(`${process.env.REACT_APP_CAT}/index/rankBoard`, {
       headers: {
         Authorization: Authorizationtest,
       },
     });
-    setRankcats(data);
-    console.log(rankcats);
+    setRankcats(datas);
   };
 
   const onClickDeleteCats = async (id) => {
@@ -49,7 +50,6 @@ const Index = () => {
 
   useEffect(() => {
     fetchCat();
-    // fetchRank();
   }, []);
 
   return (
@@ -59,18 +59,19 @@ const Index = () => {
           <div className="one">
             <StCrown src="img/1등.png" alt="crown 1" />
             <StOneCatBox>
-              <div>{rankcats[0]}</div>
-
               <div>
-                <StOneCat>
-                  <br />
-                  <div>
-                    <span>
-                      <Unit>1위사진</Unit>
-                    </span>
-                  </div>
-                  <br />
-                </StOneCat>
+                <StImage src="img/main2.png" />
+                <div>
+                  <StOneCat>
+                    <br />
+                    <div>
+                      <span>
+                        <Unit> 채(정)고(양이){/* <img src={rankcats[0].imageUrl} /> */}</Unit>
+                      </span>
+                    </div>
+                    <br />
+                  </StOneCat>
+                </div>
               </div>
             </StOneCatBox>
           </div>
@@ -80,13 +81,15 @@ const Index = () => {
           <div className="two">
             <StSecondThird src="img/crown.png" alt="crown 2" />
             <StOneCatBox>
-              <div>이미지</div>
+              <div>
+                <StImage src="img/타뮤.png" />
+              </div>
               <div>
                 <StOneCat>
                   <br />
                   <div>
                     <span>
-                      <Unit>2위</Unit>
+                      <Unit>타뮤</Unit>
                     </span>
                   </div>
                   <br />
@@ -98,13 +101,15 @@ const Index = () => {
             {" "}
             <StSecondThird src="img/crown.png" alt="crown 3" />
             <StOneCatBox>
-              <div>이미지</div>
+              <div>
+                <StImage src="img/아문.png" />
+              </div>
               <div>
                 <StOneCat>
                   <br />
                   <div>
                     <span>
-                      <Unit>3위</Unit>
+                      <Unit>아문</Unit>
                     </span>
                   </div>
                   <br />
@@ -113,11 +118,11 @@ const Index = () => {
             </StOneCatBox>
           </div>
         </StSecondLine>
-
         <div>
           <Header>
             <Btn
               onClick={() => {
+                window.localStorage.clear();
                 navigate("/");
               }}
             >
@@ -130,7 +135,9 @@ const Index = () => {
             >
               고양이 소개 추가하기
             </Btn>
-            <Btn onClick="http://43.200.163.145/chatroom">다른 집사와 대화하기</Btn>
+            <Btn type="button" value="버튼" onClick={moveToChatroomHandler}>
+              다른 집사와 대화하기
+            </Btn>
           </Header>
         </div>
         <Listt>
@@ -143,7 +150,7 @@ const Index = () => {
                     navigate(`/Detail/${cat.boardId}`);
                   }}
                 >
-                  <img src={cat.imageUrl} />
+                  <StImage src={cat.imageUrl} />
                 </div>
                 <div>
                   <StOneCat>
@@ -186,20 +193,7 @@ const StOneCatBox = styled.div`
   padding: 15px;
   border-radius: 20px;
   width: 300px;
-  height: 200px;
-`;
-
-const StFirstLine = styled.div`
-  margin-top: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StSecondLine = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: fit-content;
 `;
 
 const StOneCat = styled.div``;
@@ -214,7 +208,7 @@ const Header = styled.div`
   margin-bottom: 24px;
 `;
 
-const Btn = styled.div`
+const Btn = styled.button`
   width: 170px;
   background-color: #343434;
   border: none;
@@ -234,6 +228,7 @@ const Btn = styled.div`
 `;
 
 const Listt = styled.div`
+  height: fit-content;
   max-width: 1440px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -243,6 +238,7 @@ const Listt = styled.div`
 `;
 
 const Unit = styled.div`
+  text-align: center;
   font-size: 30px;
   line-height: 20px;
   color: #000000;
@@ -267,6 +263,28 @@ const StButton = styled.button`
   cursor: pointer;
   /* font-family: "Noto Sans KR", sans-serif; */
 `;
+const StImage = styled.img`
+  width: 240px;
+  height: 240px;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+`;
+
+const StFirstLine = styled.div`
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StSecondLine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StCrown = styled.img`
   width: 220px;
   height: 140px;
@@ -283,3 +301,5 @@ const StSecondThird = styled.img`
   display: flex;
   align-items: center;
 `;
+
+//
