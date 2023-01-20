@@ -7,7 +7,7 @@ import Layout from "../shared/Layout";
 import Love from "./Love/Love";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -15,26 +15,20 @@ const Index = () => {
   const [rankcats, setRankcats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_CAT}/index/boardList`,
-      {
-        headers: {
-          Authorization: Authorizationtest,
-        },
-      }
-    );
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
     setCats(data);
   };
 
   const fetchRank = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_CAT}/index/rankBoard`,
-      {
-        headers: {
-          Authorization: Authorizationtest,
-        },
-      }
-    );
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/rankBoard`, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
     setRankcats(data);
     console.log(rankcats);
   };
@@ -136,13 +130,7 @@ const Index = () => {
             >
               고양이 소개 추가하기
             </Btn>
-            <Btn
-              onClick={() => {
-                navigate("/Add");
-              }}
-            >
-              다른 집사와 대화하기
-            </Btn>
+            <Btn onClick="http://43.200.163.145/chatroom">다른 집사와 대화하기</Btn>
           </Header>
         </div>
         <Listt>
@@ -155,8 +143,7 @@ const Index = () => {
                     navigate(`/Detail/${cat.boardId}`);
                   }}
                 >
-                  어디갔지
-                  {cat.imageUrl}
+                  <img src={cat.imageUrl} />
                 </div>
                 <div>
                   <StOneCat>

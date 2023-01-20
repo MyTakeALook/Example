@@ -18,7 +18,7 @@ const Detail = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDIyNzMwNSwiaWF0IjoxNjc0MTQwOTA1fQ.eBztfcV6yCcea-FTGXZqLMIGSVnljxJUx3tGMY3st-Y";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
 
   // 게시물 CRUD
   const onEditThisCat = (e) => {

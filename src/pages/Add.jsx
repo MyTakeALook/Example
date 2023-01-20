@@ -18,33 +18,23 @@ const Add = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
 
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null); //파일
 
   const handleChangeFile = (event) => {
-    // console.log(event.target.files);
     setImgFile(event.target.files);
-    //fd.append("file", event.target.files)
     setImgBase64([]);
     for (var i = 0; i < event.target.files.length; i++) {
       if (event.target.files[i]) {
         let reader = new FileReader();
-        reader.readAsDataURL(event.target.files[i]); // 1. 파일을 읽어 버퍼에 저장합니다.
-        // 파일 상태 업데이트
+        reader.readAsDataURL(event.target.files[i]);
         reader.onloadend = () => {
-          // 2. 읽기가 완료되면 아래코드가 실행됩니다.
           const base64 = reader.result;
-          // console.log(base64);
           if (base64) {
-            //  images.push(base64.toString())
             var base64Sub = base64.toString();
-
             setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
-            //  setImgBase64(newObj);
-            // 파일 base64 상태 업데이트
-            //  console.log(images)
           }
         };
       }
@@ -52,7 +42,6 @@ const Add = () => {
   };
 
   const onWriteHandler = async (cats) => {
-    //여기부터
     const fd = new FormData();
     Object.values(imgFile).forEach((file) => fd.append("file", file));
     fd.append("title", cats.title);
@@ -60,24 +49,18 @@ const Add = () => {
     fd.append("age", cats.age);
     fd.append("gender", cats.gender);
     fd.append("text", cats.text);
-    //기존
     await axios
       .post(`${process.env.REACT_APP_CAT}/index/submit`, fd, {
-        // .post(`${process.env.REACT_APP_CAT}/WriteBoard.do`, fd, {
         headers: {
-          // Authorization: Authorizationtest,
+          Authorization: Authorizationtest,
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         if (response.data) {
-          console.log(response.data);
-          // history.push("/test1");
         }
       })
-      .catch((error) => {
-        // 예외 처리
-      });
+      .catch((error) => {});
     // navigate("/index");
   };
 
@@ -148,7 +131,7 @@ const Add = () => {
                 {imgBase64.map((item) => {
                   return (
                     <img
-                      className="d-block w-100"
+                      key={Date.now()}
                       src={item}
                       alt="First slide"
                       style={{ width: "100%", height: "100%" }}
@@ -212,7 +195,6 @@ const Textarea = styled.textarea`
   width: 300px;
 `;
 const StAddCard = styled.div`
-  /* text-align: center; */
   padding: 50px 0 30px 0;
   display: flex;
   justify-content: center;
@@ -239,7 +221,6 @@ const StButton = styled.button`
   font-size: 13px;
   color: white;
   cursor: pointer;
-  /* font-family: "Noto Sans KR", sans-serif; */
 `;
 const StButtons = styled.div`
   display: flex;
@@ -263,7 +244,6 @@ const StTitleBox = styled.h2`
 `;
 const StInputBox = styled.div`
   margin-top: -50px;
-  /* border: solid 2px black; */
   width: 350px;
   text-align: center;
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Authorizationtest =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbGEiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI2ODY4MSwiaWF0IjoxNjc0MTgyMjgxfQ.NYrEYGY_GFIR5iRPGesnDpFtL_FXGCiJXgAccnDC8Hc";
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
 
 const Comment = ({ boardId, comment }) => {
   // console.log("commentId :", commentId);
@@ -17,14 +17,11 @@ const Comment = ({ boardId, comment }) => {
   const onDeleteComment = async (id) => {
     const result = window.confirm("삭제하시겠습니까?");
     if (result) {
-      await axios.delete(
-        `http://43.200.163.145/board/${boardId}/${comment.commentId}`,
-        {
-          headers: {
-            Authorization: Authorizationtest,
-          },
-        }
-      );
+      await axios.delete(`http://43.200.163.145/board/${boardId}/${comment.commentId}`, {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      });
       return window.location.reload();
     } else {
       return;
@@ -32,15 +29,11 @@ const Comment = ({ boardId, comment }) => {
   };
 
   const onEditComment = async (e) => {
-    await axios.patch(
-      `${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`,
-      e,
-      {
-        headers: {
-          Authorization: Authorizationtest,
-        },
-      }
-    );
+    await axios.patch(`${process.env.REACT_APP_CAT}/board/${boardId}/${comment.commentId}`, e, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
   };
   return (
     <>
@@ -81,9 +74,7 @@ const Comment = ({ boardId, comment }) => {
               });
             }}
           />
-          <StEditDoneButton onClick={() => onEditComment(editcomment)}>
-            수정 완료
-          </StEditDoneButton>
+          <StEditDoneButton onClick={() => onEditComment(editcomment)}>수정 완료</StEditDoneButton>
         </StEditCommentForm>
       )}
     </>

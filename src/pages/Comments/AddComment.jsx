@@ -11,7 +11,7 @@ const AddCommentForm = () => {
   });
 
   const Authorizationtest =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE0NzgwMCwiaWF0IjoxNjc0MDYxNDAwfQ.URZVNIyiIdWIvWIso_q_LszLWH1F1icSsHQY5sfKlCE";
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDI4Mjk5NywiaWF0IjoxNjc0MTk2NTk3fQ.W1BpuVS4OymRI2eRcTZZXiuq6M0hl8hmxxFm7qaxyQM";
 
   // const submitCommentHandler = (comment) => {
   //   fetch(`${process.env.REACT_APP_CAT}/board/${id}`, {
