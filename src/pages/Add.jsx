@@ -3,17 +3,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Layout from "../shared/Layout";
-// import {Authorizationtest} from "../shared/api"
 
 const Add = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState({
     title: "",
-    imageUrl: "",
     catName: "",
     age: "",
     gender: "",
     text: "",
+    imageurl: "",
     love: 0,
     visit: 0,
   });
@@ -21,13 +20,65 @@ const Add = () => {
   const Authorizationtest =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsoJXquLAiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY3NDE5NDQyNywiaWF0IjoxNjc0MTA4MDI3fQ.m3mwGImG3L7Ke-f9ipDJRml0xmzGa2Fi1xO8iHkYo1g";
 
+  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
+  const [imgFile, setImgFile] = useState(null); //파일
+
+  const handleChangeFile = (event) => {
+    // console.log(event.target.files);
+    setImgFile(event.target.files);
+    //fd.append("file", event.target.files)
+    setImgBase64([]);
+    for (var i = 0; i < event.target.files.length; i++) {
+      if (event.target.files[i]) {
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[i]); // 1. 파일을 읽어 버퍼에 저장합니다.
+        // 파일 상태 업데이트
+        reader.onloadend = () => {
+          // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+          const base64 = reader.result;
+          // console.log(base64);
+          if (base64) {
+            //  images.push(base64.toString())
+            var base64Sub = base64.toString();
+
+            setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
+            //  setImgBase64(newObj);
+            // 파일 base64 상태 업데이트
+            //  console.log(images)
+          }
+        };
+      }
+    }
+  };
+
   const onWriteHandler = async (cats) => {
-    await axios.post(`${process.env.REACT_APP_CAT}/index/submit`, cats, {
-      headers: {
-        Authorization: Authorizationtest,
-      },
-    });
-    navigate("/index");
+    //여기부터
+    const fd = new FormData();
+    Object.values(imgFile).forEach((file) => fd.append("file", file));
+    fd.append("title", cats.title);
+    fd.append("catName", cats.catName);
+    fd.append("age", cats.age);
+    fd.append("gender", cats.gender);
+    fd.append("text", cats.text);
+    //기존
+    await axios
+      .post(`${process.env.REACT_APP_CAT}/index/submit`, fd, {
+        // .post(`${process.env.REACT_APP_CAT}/WriteBoard.do`, fd, {
+        headers: {
+          // Authorization: Authorizationtest,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          console.log(response.data);
+          // history.push("/test1");
+        }
+      })
+      .catch((error) => {
+        // 예외 처리
+      });
+    // navigate("/index");
   };
 
   return (
@@ -59,7 +110,6 @@ const Add = () => {
                   name="catName"
                   required
                 />
-
                 <StInput
                   fullwidth
                   type="text"
@@ -75,7 +125,6 @@ const Add = () => {
                   name="gender"
                   required
                 />
-
                 <StInput
                   type="text"
                   onChange={(event) => {
@@ -90,22 +139,22 @@ const Add = () => {
                   name="age"
                   required
                 />
-
-                {/* <StInput
-                  type="text"
-                  onChange={(event) => {
-                    const { value } = event.target;
-                    setCats({
-                      ...cats,
-                      catName: value,
-                    });
-                  }}
-                  value={cats.name}
-                  placeholder="집사이름:"
-                  name="name"
-                  required
-                /> */}
-                <StInput type="file" />
+                <StInput
+                  type="file"
+                  accept="image/jpg,image/png,image/jpeg,image/gif"
+                  onChange={handleChangeFile}
+                  multiple="multiple"
+                />
+                {imgBase64.map((item) => {
+                  return (
+                    <img
+                      className="d-block w-100"
+                      src={item}
+                      alt="First slide"
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  );
+                })}
                 <Textarea
                   name="text"
                   onChange={(event) => {
@@ -124,7 +173,6 @@ const Add = () => {
               </StInputBox>
               <StButtons>
                 <StButton type="submit">저장하기</StButton>
-
                 <StButton
                   onClick={() => {
                     navigate(-1);

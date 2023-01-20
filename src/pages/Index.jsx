@@ -12,6 +12,7 @@ const Authorizationtest =
 const Index = () => {
   const navigate = useNavigate();
   const [cats, setCats] = useState([]);
+  const [rankcats, setRankcats] = useState([]);
 
   const fetchCat = async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
@@ -19,8 +20,17 @@ const Index = () => {
         Authorization: Authorizationtest,
       },
     });
-
     setCats(data);
+  };
+
+  const fetchRank = async () => {
+    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/rankBoard`, {
+      headers: {
+        Authorization: Authorizationtest,
+      },
+    });
+    setRankcats(data);
+    console.log(rankcats);
   };
 
   const onClickDeleteCats = async (id) => {
@@ -39,20 +49,68 @@ const Index = () => {
 
   useEffect(() => {
     fetchCat();
+    // fetchRank();
   }, []);
 
   return (
     <div>
       <Layout>
+        <StFirstLine>
+          <div className="one">
+            <StOneCatBox>
+              <div>{rankcats[0]}</div>
+              <div>
+                <StOneCat>
+                  <br />
+                  <div>
+                    <span>
+                      <Unit>1위사진</Unit>
+                    </span>
+                  </div>
+                  <br />
+                </StOneCat>
+              </div>
+            </StOneCatBox>
+          </div>
+        </StFirstLine>
+        <br />
+        <StSecondLine>
+          <div className="two">
+            <StOneCatBox>
+              <div>이미지</div>
+              <div>
+                <StOneCat>
+                  <br />
+                  <div>
+                    <span>
+                      <Unit>2위</Unit>
+                    </span>
+                  </div>
+                  <br />
+                </StOneCat>
+              </div>
+            </StOneCatBox>
+          </div>
+          <div className="three">
+            <StOneCatBox>
+              <div>이미지</div>
+              <div>
+                <StOneCat>
+                  <br />
+                  <div>
+                    <span>
+                      <Unit>3위</Unit>
+                    </span>
+                  </div>
+                  <br />
+                </StOneCat>
+              </div>
+            </StOneCatBox>
+          </div>
+        </StSecondLine>
+
         <div>
           <Header>
-            {/* <Btn
-              onClick={() => {
-                navigate("/Index");
-              }}
-            >
-              🐰홈이냥
-            </Btn> */}
             <Btn
               onClick={() => {
                 navigate("/");
@@ -79,7 +137,8 @@ const Index = () => {
                     navigate(`/Detail/${cat.boardId}`);
                   }}
                 >
-                  (사진들어갈예정)
+                  어디갔지
+                  {cat.imageUrl}
                 </div>
                 <div>
                   <StOneCat>
@@ -114,6 +173,7 @@ const Index = () => {
 };
 
 export default Index;
+
 const StOneCatBox = styled.div`
   margin-left: 20px;
   background-color: #dadada;
@@ -122,6 +182,19 @@ const StOneCatBox = styled.div`
   border-radius: 20px;
   width: 300px;
   height: 200px;
+`;
+
+const StFirstLine = styled.div`
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StSecondLine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StOneCat = styled.div``;

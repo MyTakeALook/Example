@@ -1,27 +1,17 @@
-import Router from "../shared/Router";
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // axios import 합니다
 import styled from "styled-components";
 import { TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-// import AuthContext from "./context/AuthProvider";
-// import { useCookies } from "react-cookie";
 
 function Login() {
-  // const [cookies, setCookie] = useCookies(["쿠키 이름"]);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
-
   const [errMsg, setErrMsg] = useState("");
-  // const [success, setSuccess] = useState(false);
-  // useEffect(() => {
-  //   // userRef.current.focus();
-  // }, []);
 
   useEffect(() => {
     setErrMsg("");
@@ -79,13 +69,7 @@ function Login() {
           />
         </StDiv>
         <Stdiv2>
-          <StButton
-            type="submit"
-            onClick={handleSubmit}
-            // onClick={() => {
-            //   navigate("/Index");
-            // }}
-          >
+          <StButton type="submit" onClick={handleSubmit}>
             login
           </StButton>
           <Link to={"/Join"}>허걱! 아직 회원이 아니신가요? 회원가입하러가기! </Link>
