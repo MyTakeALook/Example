@@ -213,13 +213,13 @@ const Textarea = styled.textarea`
 `;
 const StAddCard = styled.div`
   /* text-align: center; */
-  padding-top: 50px;
+  padding: 50px 0 30px 0;
   display: flex;
   justify-content: center;
   flex-direction: row;
   background-color: #dadada;
   width: 400px;
-  height: 500px;
+  height: fit-content;
   border-radius: 60px;
 `;
 
