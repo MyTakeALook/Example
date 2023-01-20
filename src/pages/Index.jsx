@@ -15,20 +15,26 @@ const Index = () => {
   const [rankcats, setRankcats] = useState([]);
 
   const fetchCat = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/boardList`, {
-      headers: {
-        Authorization: Authorizationtest,
-      },
-    });
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_CAT}/index/boardList`,
+      {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      }
+    );
     setCats(data);
   };
 
   const fetchRank = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_CAT}/index/rankBoard`, {
-      headers: {
-        Authorization: Authorizationtest,
-      },
-    });
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_CAT}/index/rankBoard`,
+      {
+        headers: {
+          Authorization: Authorizationtest,
+        },
+      }
+    );
     setRankcats(data);
     console.log(rankcats);
   };
@@ -57,8 +63,10 @@ const Index = () => {
       <Layout>
         <StFirstLine>
           <div className="one">
+            <StCrown src="img/1등.png" alt="crown 1" />
             <StOneCatBox>
               <div>{rankcats[0]}</div>
+
               <div>
                 <StOneCat>
                   <br />
@@ -76,6 +84,7 @@ const Index = () => {
         <br />
         <StSecondLine>
           <div className="two">
+            <StSecondThird src="img/crown.png" alt="crown 2" />
             <StOneCatBox>
               <div>이미지</div>
               <div>
@@ -92,6 +101,8 @@ const Index = () => {
             </StOneCatBox>
           </div>
           <div className="three">
+            {" "}
+            <StSecondThird src="img/crown.png" alt="crown 3" />
             <StOneCatBox>
               <div>이미지</div>
               <div>
@@ -124,6 +135,13 @@ const Index = () => {
               }}
             >
               고양이 소개 추가하기
+            </Btn>
+            <Btn
+              onClick={() => {
+                navigate("/Add");
+              }}
+            >
+              다른 집사와 대화하기
             </Btn>
           </Header>
         </div>
@@ -261,4 +279,20 @@ const StButton = styled.button`
   color: white;
   cursor: pointer;
   /* font-family: "Noto Sans KR", sans-serif; */
+`;
+const StCrown = styled.img`
+  width: 220px;
+  height: 140px;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
+`;
+const StSecondThird = styled.img`
+  width: 110px;
+  height: 70px;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
 `;
